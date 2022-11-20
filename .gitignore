@@ -25,7 +25,7 @@ firebase-error.log*
 !.vscode/settings.json
 
 # Misc
-.firebase/*
+.firebase
 __generated__
 .DS_Store
 .env.local
@@ -34,3 +34,4 @@ __generated__
 .yarn-integrity
 backup.sql
 VERSION
+.github
