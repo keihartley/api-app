@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../Tools/Firebase/firebase";
-import { signInWithGoogle, logInWithEmailAndPassword } from "../../Tools/Firebase/auth";
-import { Button, Input, Typography, Stack } from "@mui/material";
+import {
+  signInWithGoogle,
+  logInWithEmailAndPassword,
+} from "../../Tools/Firebase/auth";
+import { Button, Input, Typography } from "@mui/material";
+import { Box, Stack } from "@mui/system";
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,29 +20,76 @@ function Login() {
     }
     if (user) navigate("/dashboard");
   }, [user, loading, navigate]);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const email = data.get("email")
+    const password = data.get("password")
+    logInWithEmailAndPassword(email, password);
+  };
   return (
-    <div>
-      <Stack spacing={2} component="form">
-        <Typography variant="h5">Login</Typography>
+    <Box
+      sx={{ width: "100%", height: "100%" }}
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+    >
+      <Stack
+        justifyContent="center"
+        alignItems="stretch"
+        spacing={2}
+        direction="column"
+        component="form"
+        onSubmit={handleSubmit}
+        noValidate
+        sx={{ mt: 1 }}
+      >
+        <Typography component="h1" variant="h5">
+          Login
+        </Typography>
         <Input
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
+          required
+          fullWidth
+          id="email"
           placeholder="Email address"
-          type="email"
+          name="email"
+          autoComplete="email"
+          autoFocus
         />
         <Input
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
+          required
+          fullWidth
+          name="password"
           placeholder="Password"
           type="password"
+          id="password"
+          autoComplete="current-password"
         />
-        <Button onClick={() => logInWithEmailAndPassword(email, password)} variant="contained">Login</Button>
-        <Button onClick={signInWithGoogle} variant="outlined">Sign-In With Google</Button>
+        <Button
+          fullWidth
+          type="submit"
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+        >
+          Login
+        </Button>
+        <Button
+          onClick={signInWithGoogle}
+          fullWidth
+          variant="outlined"
+          sx={{ mt: 3, mb: 2 }}
+        >
+          Sign-In With Google
+        </Button>
         <Typography>
-          Don't have an account? <Link to="/register">Register now</Link>
+          Don't have an account? <Link to="/register">Register here</Link>
+        </Typography>
+        <Typography variant="body2">
+          Forgot password? <Link to="/reset">Reset here</Link>
         </Typography>
       </Stack>
-    </div>
+    </Box>
   );
 }
 

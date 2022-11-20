@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Box, AppBar, Toolbar, Typography, Button } from "@mui/material";
 import { logout } from "../Tools/Firebase/auth";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../Tools/Firebase/firebase";
 
 function Dashboard() {
-  const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
+  const [user, loading] = useAuthState(auth);
 
   useEffect(() => {
     if (loading) return;
@@ -28,8 +28,6 @@ function Dashboard() {
           </Toolbar>
         </AppBar>
       </Box>
-      Logged in as
-      <div>{user?.email}</div>
     </div>
   );
 }

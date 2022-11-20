@@ -1,54 +1,99 @@
-import React, { useEffect, useState } from 'react'
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { Link, useNavigate } from 'react-router-dom';
-import { registerWithEmailAndPassword, signInWithGoogle } from '../../Tools/Firebase/auth';
-import { auth } from '../../Tools/Firebase/firebase';
-import { Button, Input, Typography, Stack } from "@mui/material";
+import React, { useEffect } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  registerWithEmailAndPassword,
+  signInWithGoogle,
+} from "../../Tools/Firebase/auth";
+import { auth } from "../../Tools/Firebase/firebase";
+import { Button, Input, Typography, Stack, Box } from "@mui/material";
 
 function Register() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
-  const [user, loading, error] = useAuthState(auth);
-  const navigate = useNavigate()
-  const register = () => {
-    if (!username) alert("Please enter name");
+  const [user, loading] = useAuthState(auth);
+  const navigate = useNavigate();
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const username = data.get("username");
+    const email = data.get("email");
+    const password = data.get("password");
     registerWithEmailAndPassword(username, email, password);
   };
 
   useEffect(() => {
     if (loading) return;
-    if (user) navigate.replace("/dashboard");
+    if (user) navigate("/dashboard");
   }, [user, loading, navigate]);
   return (
-    <div>
-        <Stack spacing={2} component="form">
+    <Box
+      sx={{ width: "100%", height: "100%" }}
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+    >
+      <Stack
+        justifyContent="center"
+        alignItems="stretch"
+        spacing={2}
+        direction="column"
+        component="form"
+        onSubmit={handleSubmit}
+        noValidate
+        sx={{ mt: 1 }}
+      >
         <Typography variant="h5">Register</Typography>
         <Input
-          onChange={(e) => setUsername(e.target.value)}
-          value={username}
-          placeholder="username"
+          required
+          fullWidth
+          id="username"
+          placeholder="Username"
+          name="username"
+          autoComplete="username"
           type="text"
+          autoFocus
         />
         <Input
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-          placeholder="Email address"
+          required
+          fullWidth
+          id="email"
+          placeholder="Email Address"
+          name="email"
+          autoComplete="email"
           type="email"
+          autoFocus
         />
         <Input
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
+          required
+          fullWidth
+          id="password"
           placeholder="Password"
+          name="password"
+          autoComplete="password"
           type="password"
+          autoFocus
         />
-        <Button onClick={register} variant="contained">Register</Button>
-        <Button onClick={signInWithGoogle} variant="outlined">Register With Google</Button>
+        <Button
+          fullWidth
+          type="submit"
+          sx={{ mt: 3, mb: 2 }}
+          variant="contained"
+        >
+          Register
+        </Button>
+        <Button
+          onClick={signInWithGoogle}
+          fullWidth
+          variant="outlined"
+          sx={{ mt: 3, mb: 2 }}
+        >
+          Register With Google
+        </Button>
         <Typography>
-        Already have an account? <Link to="/">Login now</Link>
+          Already have an account? <Link to="/">Login here</Link>
         </Typography>
       </Stack>
-    </div>
+    </Box>
   );
 }
 
