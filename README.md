@@ -4,14 +4,18 @@ URL: https://api-app-23303.web.app/
 
 ## Utilized Tools
 
-- Material UI
-- React.js
-- Firebase & Firestore
-- API: still deciding
+- Material UI: Frontend user interface NPM package
+- React.js: Building the user interface
+- Firebase: Handles the backend & data (Firestore), authenticates users, and hosts/deploys the application
+- API: Still picking an API from [RapidAPI](https://rapidapi.com/)
 
 ## Purpose
 
 Will add once the API is added
+
+## Features
+
+- User auth, logging in and registering through email or a third party application (Google)
 
 # Getting Started with Create React App
 
