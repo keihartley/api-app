@@ -1,11 +1,17 @@
 # Hosted on *Firebase*
-URL: https://ai-art-676e8.web.app/
+
+URL: https://api-app-23303.web.app/
 
 ## Utilized Tools
+
 - Material UI
 - React.js
 - Firebase & Firestore
-- AI Art API
+- API: still deciding
+
+## Purpose
+
+Will add once the API is added
 
 # Getting Started with Create React App
 

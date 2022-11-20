@@ -9,7 +9,7 @@
 /coverage
 
 # Build Output
-/build
+build
 
 # Logs
 npm-debug.log*
@@ -26,12 +26,12 @@ firebase-error.log*
 
 # Misc
 .firebase
+.github
 __generated__
 .DS_Store
 .env.local
 .env.*.local
 .eslintcache
 .yarn-integrity
-backup.sql
-VERSION
-.github
+.env
+env.js
