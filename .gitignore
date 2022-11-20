@@ -35,3 +35,4 @@ __generated__
 .yarn-integrity
 .env
 env.js
+.github/workflows
