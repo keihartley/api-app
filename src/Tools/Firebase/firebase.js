@@ -3,43 +3,8 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getAnalytics } from "firebase/analytics";
-import { fetchAPI } from "../fetchAPI";
+import { fetchFDA } from "../fetchFDA";
 
-
-const config = {
-  method: "GET", // default
-  url: "https://api.fda.gov",
-  headers: {
-    endpoint: "/drug", // default
-    category: "/event.json",
-  },
-  params: {
-    api_key: process.env.REACT_APP_OPENFDA_API_KEY,
-    // search: What to search for, in which fields.
-    // sort: Sort the results of the search by the specified field
-    // count:  Count the number of unique values of a certain field
-    // limit: Return up to this number of records that match the search parameter
-    // skip: Skip this number of records that match the search parameter
-  },
-};
-
-export function requestAPIHandler(endpoint, category, parameters) {
-  if (endpoint !== null && endpoint !== "") {
-    config["headers"]["endpoint"] = endpoint;
-  }
-  if (category !== null && category !== "") {
-    console.log(category)
-    config["headers"]["category"] = category;
-  }
-  for (var key in parameters) {
-    config["params"][key] = parameters[key];
-  }
-  console.log(config)
-  fetchAPI(config);
-}
-var parameters = { search: "receivedate:[20040101+TO+20081231]", limit: "50" };
-
-requestAPIHandler(null, null, parameters);
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -61,3 +26,14 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 getAnalytics(app);
+
+// temp headers
+const params = { search: "receivedate:[20040101+TO+20081231]", limit: "20" };
+var results;
+
+// runs the fetchFDA function that fetches from the openFDA api
+(async () => {
+  const data = await fetchFDA(params)
+  results = data.results
+  console.log(results)
+})()
