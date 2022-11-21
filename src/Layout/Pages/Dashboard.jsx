@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { Box, AppBar, Toolbar, Typography, Button } from "@mui/material";
-import { logout } from "../Tools/Firebase/auth";
+import { logout } from "../../Tools/Firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../Tools/Firebase/firebase";
+import { auth } from "../../Tools/Firebase/firebase";
 
 function Dashboard() {
   const navigate = useNavigate();

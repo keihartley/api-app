@@ -17,6 +17,7 @@
     "react-firebase-hooks": "^5.1.1",
     "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.1",
+    "superagent": "^8.0.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -41,17 +42,6 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
-    ]
-  },
-  "react-dotenv": {
-    "whitelist": [
-      "MEASUREMENT_ID",
-      "APP_ID",
-      "MESSAGING_SENDER_ID",
-      "STORAGE_BUCKET",
-      "PROJECT_ID",
-      "AUTH_DOMAIN",
-      "API_KEY"
     ]
   }
 }
