@@ -5,13 +5,13 @@ function fetchAPI(config) {
     config["method"],
     config["url"],
     config["headers"],
-    config["params"]
+    config["params"],
   ];
-  console.log(params)
-  console.log(url + headers['endpoint'] + headers['category'])
+  console.log(params);
+  console.log(url + headers["endpoint"] + headers["category"]);
   if (method === "GET") {
     superagent
-      .get(url + headers['endpoint'] + headers['category'])
+      .get(url + headers["endpoint"] + headers["category"])
       .query(params)
       .end((err, res) => {
         if (err) {
