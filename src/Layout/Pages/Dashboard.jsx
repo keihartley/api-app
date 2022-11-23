@@ -24,6 +24,7 @@ import {
   SearchRounded,
   Settings,
 } from "@mui/icons-material";
+import Recalls from "../../Components/Recalls/Recalls";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -33,6 +34,8 @@ function Dashboard() {
   useEffect(() => {
     if (loading) return;
     if (!user) return navigate("/");
+
+
   }, [user, loading, navigate]);
 
   const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -123,6 +126,7 @@ function Dashboard() {
           </Toolbar>
         </AppBar>
       </Box>
+      <Recalls />
       {user ? (
         <Typography variant="h4">Welcome {user.displayName} </Typography>
       ) : (

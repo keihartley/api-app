@@ -3,7 +3,6 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getAnalytics } from "firebase/analytics";
-import { fetchFDA } from "../fetchFDA";
 
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -26,14 +25,3 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 getAnalytics(app);
-
-// temp headers
-const params = { search: "receivedate:[20040101+TO+20081231]", limit: "20" };
-var results;
-
-// runs the fetchFDA function that fetches from the openFDA api
-(async () => {
-  const data = await fetchFDA(params)
-  results = data.results
-  console.log(results)
-})()
