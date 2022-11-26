@@ -5,6 +5,8 @@ import axios from "axios";
 import { Grid, LinearProgress } from "@mui/material";
 import CocktailListItem from '../../Components/CocktailList/CocktailListItem';
 
+
+
 function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -33,7 +35,7 @@ function Dashboard() {
     <Box sx={{ height: "100%" }}>
       <Bar />
       {loading && <LinearProgress />}
-      <Grid container spacing={3} direction='column'>
+      <Grid container spacing={4} sx={{padding: '2.0em'}} alignItems='stretch'>
         {data.map((item) => (
           <CocktailListItem key={item.idDrink} cocktail={item}/>
         ))}
