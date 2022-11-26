@@ -2,12 +2,12 @@ import { Box } from "@mui/system";
 import React, { useState, useCallback, useEffect } from "react";
 import Bar from "../../Components/Nav/Bar";
 import axios from "axios";
-import { Grid, LinearProgress } from "@mui/material";
-import CocktailListItem from '../../Components/CocktailList/CocktailListItem';
-
-
+import { Divider, Grid, LinearProgress, Typography } from "@mui/material";
+import CocktailListItem from "../../Components/CocktailList/CocktailListItem";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
 
@@ -19,7 +19,7 @@ function Dashboard() {
     axios
       .get(url)
       .then((res) => {
-        setData(res.data.drinks)
+        setData(res.data.drinks);
       })
       .catch((err) => {
         console.error(err);
@@ -28,16 +28,32 @@ function Dashboard() {
   }, []);
 
   useEffect(() => {
-    fetchCocktail()
-  }, [fetchCocktail])
+    fetchCocktail();
+  }, [fetchCocktail]);
 
   return (
     <Box sx={{ height: "100%" }}>
       <Bar />
       {loading && <LinearProgress />}
-      <Grid container spacing={4} sx={{padding: '2.0em'}} alignItems='stretch'>
+      <Typography
+        align="center"
+        gutterBottom={true}
+        variant="h3"
+        sx={{ margin: "1em" }}
+      >
+        Discover Cocktails!
+      </Typography>
+      <Divider />
+      <Grid
+        container
+        spacing={4}
+        sx={{ padding: "2.0em" }}
+        alignItems="stretch"
+      >
         {data.map((item) => (
-          <CocktailListItem key={item.idDrink} cocktail={item}/>
+          <Grid item xs={12} sm={6} md={4} key={item.idDrink}>
+            <CocktailListItem cocktail={item} navigate={navigate} />
+          </Grid>
         ))}
       </Grid>
     </Box>

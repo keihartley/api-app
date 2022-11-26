@@ -4,6 +4,7 @@ import Dashboard from "./Pages/Dashboard";
 import Register from "../Components/Auth/Register";
 import Reset from "../Components/Auth/Reset";
 import Search from "./Pages/Search";
+import SingleCocktail from './Pages/SingleCocktail';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/reset" element={<Reset />} />
             <Route path="/search/:cocktail" element={<Search />} />
+            <Route path="/cocktail/:name" element={<SingleCocktail/>} />
           </Routes>
         </Router>
     </div>

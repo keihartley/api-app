@@ -1,5 +1,8 @@
 import {
+  Button,
+  ButtonGroup,
   Card,
+  CardActions,
   CardContent,
   CardMedia,
   Grid,
@@ -13,7 +16,7 @@ import React, { Component } from "react";
 
 class CocktailListItem extends Component {
   render() {
-    const { cocktail, key } = this.props;
+    const { cocktail, navigate } = this.props;
     const keys = Object.keys(cocktail);
 
     const findKeys = (substring) => {
@@ -43,9 +46,12 @@ class CocktailListItem extends Component {
     const ingredients = findVals(ingredientKeys);
     const measures = findVals(measureKeys);
 
+    const handleClick = () => {
+      navigate(`/cocktail/${cocktail.strDrink}`);
+    }
+
     return (
-      <Grid item xs={12} sm={6} md={4} key={key}>
-        <Card sx={{height: '100%'}}>
+        <Card sx={{height: '100%'}} raised>
           <CardMedia component="img" image={cocktail.strDrinkThumb} alt="#" />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
@@ -80,8 +86,10 @@ class CocktailListItem extends Component {
               </Grid>
             </Grid>
           </CardContent>
+          <CardActions>
+            <ButtonGroup variant="outlined" fullWidth={true} ><Button onClick={handleClick}>View More</Button><Button color='secondary'>Save To Profile</Button></ButtonGroup>
+          </CardActions>
         </Card>
-      </Grid>
     );
   }
 }
