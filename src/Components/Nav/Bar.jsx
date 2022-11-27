@@ -93,7 +93,7 @@ function Bar() {
         <AppBar position="static">
           <Toolbar>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Dashboard
+              COCKTAILS ACCESS
             </Typography>
             <Search onSubmit={(e) => handleSubmit(e)}>
               <SearchIconWrapper>

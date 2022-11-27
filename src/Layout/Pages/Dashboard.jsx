@@ -51,9 +51,7 @@ function Dashboard() {
         alignItems="stretch"
       >
         {data.map((item) => (
-          <Grid item xs={12} sm={6} md={4} key={item.idDrink}>
-            <CocktailListItem cocktail={item} navigate={navigate} />
-          </Grid>
+            <CocktailListItem cocktail={item} navigate={navigate} key={item.idDrink}/>
         ))}
       </Grid>
     </Box>

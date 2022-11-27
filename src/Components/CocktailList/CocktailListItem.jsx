@@ -47,11 +47,12 @@ class CocktailListItem extends Component {
     const measures = findVals(measureKeys);
 
     const handleClick = () => {
-      navigate(`/cocktail/${cocktail.strDrink}`);
-    }
+      navigate(`/dashboard/${cocktail.idDrink}`);
+    };
 
     return (
-        <Card sx={{height: '100%'}} raised>
+      <Grid item xs={12} sm={6} md={4}>
+        <Card sx={{ height: "100%" }} raised>
           <CardMedia component="img" image={cocktail.strDrinkThumb} alt="#" />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
@@ -63,12 +64,12 @@ class CocktailListItem extends Component {
             <Typography variant="body2" color="text.secondary">
               Instructions: {cocktail.strInstructions}
             </Typography>
-            <Grid container direction='row' alignItems='flex-start'>
+            <Grid container direction="row" alignItems="flex-start">
               <Grid item>
                 <List>
                   <ListSubheader>Ingredients</ListSubheader>
-                  {ingredients.map((ingredient) => (
-                    <ListItem>
+                  {ingredients.map((ingredient, index) => (
+                    <ListItem key={index}>
                       <ListItemText>{ingredient}</ListItemText>
                     </ListItem>
                   ))}
@@ -77,8 +78,8 @@ class CocktailListItem extends Component {
               <Grid item>
                 <List>
                   <ListSubheader>Measurements</ListSubheader>
-                  {measures.map((measure) => (
-                    <ListItem>
+                  {measures.map((measure, index) => (
+                    <ListItem key={index}>
                       <ListItemText>{measure}</ListItemText>
                     </ListItem>
                   ))}
@@ -87,9 +88,13 @@ class CocktailListItem extends Component {
             </Grid>
           </CardContent>
           <CardActions>
-            <ButtonGroup variant="outlined" fullWidth={true} ><Button onClick={handleClick}>View More</Button><Button color='secondary'>Save To Profile</Button></ButtonGroup>
+            <ButtonGroup variant="outlined" fullWidth={true}>
+              <Button onClick={handleClick}>View More</Button>
+              <Button color="secondary">Save To Profile</Button>
+            </ButtonGroup>
           </CardActions>
         </Card>
+      </Grid>
     );
   }
 }
