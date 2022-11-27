@@ -7,6 +7,7 @@ import Search from "./Pages/Search";
 import CocktailDetails from '../Components/CocktailList/CocktailDetails'
 
 function App() {
+  console.log("hello world!");
   return (
     <div className="App">
         <Router>
