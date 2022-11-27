@@ -29,7 +29,6 @@ yarn-error.log*
 !.vscode/settings.json
 
 # Misc
-.github
 __generated__
 .DS_Store
 .env.local
