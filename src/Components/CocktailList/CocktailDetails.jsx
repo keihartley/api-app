@@ -1,4 +1,4 @@
-import { Button, Grid, Paper, Typography } from "@mui/material";
+import { Button, Grid, LinearProgress, Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -33,6 +33,7 @@ function CocktailDetails() {
   return (
     <Box>
       <Bar />
+      {loading && <LinearProgress />}
       <>Add Crumbs Here</>
       <Paper sx={{margin: '2em', padding: '2em'}}>
         <Grid container direction='row' justifyContent='space-between'>
