@@ -21,11 +21,11 @@ class CocktailListItem extends Component {
 
     const findKeys = (substring) => {
       const res = [];
-      keys.find((element) => {
-        if (element.includes(substring)) {
-          res.push(element);
+      keys.forEach(function(key) {
+        if (key.includes(substring)) {
+          res.push(key)
         }
-      });
+      })
       return res;
     };
 
