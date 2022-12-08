@@ -8,6 +8,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { query, getDocs, collection, where, addDoc } from "firebase/firestore";
+import { createSaved } from "./saved";
 const { auth, db } = require("./firebase");
 
 const googleProvider = new GoogleAuthProvider();
@@ -49,6 +50,7 @@ export const registerWithEmailAndPassword = async (
     (credential) => {
       const user = credential.user;
       updateProfile(user, { displayName: username })
+      createSaved(user);
     }
   ).catch((err) => {
     console.error(err)

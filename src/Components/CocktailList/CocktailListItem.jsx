@@ -18,6 +18,8 @@ import { Stack } from "@mui/system";
 import React, { Component, Fragment } from "react";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { arrayUnion, doc, updateDoc } from "firebase/firestore";
+import { auth, db } from "../../Tools/Firebase/firebase";
 
 const style = {
   position: "absolute",
@@ -55,6 +57,16 @@ class CocktailListItem extends Component {
       navigate(`/cocktail/${cocktail.idDrink}`);
     };
 
+    async function handleSave() {
+      let uid = await auth.currentUser.uid;
+      if (uid) {
+        const savedRef = doc(db, "saved", auth.currentUser.uid);
+        await updateDoc(savedRef, {
+          saved: arrayUnion(cocktail),
+        });
+      }
+    }
+
     function readMore(str, max = 10) {
       const array = str.trim().split(" ");
       const ellipsis = array.length > max ? "..." : "";
@@ -68,18 +80,22 @@ class CocktailListItem extends Component {
           image={cocktail.strDrinkThumb}
           alt="Cocktail Thumbnail"
         />
-        <CardContent sx={{padding: '1em'}}>
-          <Stack direction="row" justifyContent="space-between" alignItems='center'>
+        <CardContent sx={{ padding: "1em" }}>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
             <Typography variant="h5" component="div">
               {cocktail.strDrink}
             </Typography>
             <Tooltip title="Save">
-              <IconButton>
+              <IconButton onClick={handleSave}>
                 <LibraryAddIcon />
               </IconButton>
             </Tooltip>
           </Stack>
-          <Divider sx={{marginBottom: '1em', marginTop: '0.5em'}} />
+          <Divider sx={{ marginBottom: "1em", marginTop: "0.5em" }} />
           <Stack direction="column" spacing={1}>
             <Stack direction="row" spacing={1}>
               <Chip label={cocktail.strAlcoholic} />
@@ -94,7 +110,7 @@ class CocktailListItem extends Component {
             </Typography>
           </Stack>
         </CardContent>
-        <CardActions sx={{padding: '1em'}}>
+        <CardActions sx={{ padding: "1em" }}>
           <Button
             variant="outlined"
             color="secondary"
@@ -127,7 +143,7 @@ class CocktailListItem extends Component {
             >
               Share The Cocktail!
             </Typography>
-            <Divider sx={{marginBottom: '1em'}} />
+            <Divider sx={{ marginBottom: "1em" }} />
             <Stack direction="row">
               <OutlinedInput value={shareURL} fullWidth />
               <Button

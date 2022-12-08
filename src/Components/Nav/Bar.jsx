@@ -17,7 +17,7 @@ import { logout } from "../../Tools/Firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../Tools/Firebase/firebase";
-import { AccountCircle, Logout, Settings } from "@mui/icons-material";
+import { AccountCircle, Logout, Settings, LibraryAddOutlined } from "@mui/icons-material";
 import { styled, alpha } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 
@@ -177,6 +177,14 @@ function Bar() {
               <Settings fontSize="small" />
             </ListItemIcon>
             Settings
+          </MenuItem>
+        </Tooltip>
+        <Tooltip title="In progress" placement='top' arrow>
+          <MenuItem onClick={() => navigate('/profile/saved')}>
+            <ListItemIcon>
+              <LibraryAddOutlined fontSize="small" />
+            </ListItemIcon>
+            Saved
           </MenuItem>
         </Tooltip>
 

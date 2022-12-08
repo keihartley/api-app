@@ -5,9 +5,9 @@ import Register from "../Components/Auth/Register";
 import Reset from "../Components/Auth/Reset";
 import Search from "./Pages/Search";
 import CocktailDetails from '../Components/CocktailList/CocktailDetails'
+import Saved from './Pages/Saved';
 
 function App() {
-  console.log("hello world!");
   return (
     <div className="App">
         <Router>
@@ -18,6 +18,7 @@ function App() {
             <Route path="/reset" element={<Reset />} />
             <Route path="/search/:cocktail" element={<Search />} />
             <Route path='/cocktail/:id' element={<CocktailDetails />} />
+            <Route path='/profile/saved' element={<Saved />} />
           </Routes>
         </Router>
     </div>
