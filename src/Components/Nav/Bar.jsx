@@ -14,7 +14,7 @@ import {
   TextField,
 } from "@mui/material";
 import { logout } from "../../Tools/Firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../Tools/Firebase/firebase";
 import { AccountCircle, Logout, Settings } from "@mui/icons-material";
@@ -92,8 +92,15 @@ function Bar() {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              COCKTAILS ACCESS
+            <Typography
+              variant="h6"
+              sx={{ flexGrow: 1, textDecoration: "none" }}
+              color="whitesmoke"
+              component={Link}
+              noWrap
+              to="/dashboard"
+            >
+              Cocktails Access
             </Typography>
             <Search onSubmit={(e) => handleSubmit(e)}>
               <SearchIconWrapper>
@@ -158,16 +165,21 @@ function Bar() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem>
-          <Avatar /> My account
-        </MenuItem>
+        <Tooltip title="In progress" placement='top' arrow>
+          <MenuItem>
+            <Avatar /> My account
+          </MenuItem>
+        </Tooltip>
         <Divider />
-        <MenuItem>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          Settings
-        </MenuItem>
+        <Tooltip title="In progress" placement='top' arrow>
+          <MenuItem>
+            <ListItemIcon>
+              <Settings fontSize="small" />
+            </ListItemIcon>
+            Settings
+          </MenuItem>
+        </Tooltip>
+
         <MenuItem onClick={logout}>
           <ListItemIcon>
             <Logout fontSize="small" />

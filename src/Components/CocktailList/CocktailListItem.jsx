@@ -6,6 +6,7 @@ import {
   CardContent,
   CardMedia,
   Chip,
+  Divider,
   Grid,
   IconButton,
   Modal,
@@ -67,9 +68,9 @@ class CocktailListItem extends Component {
           image={cocktail.strDrinkThumb}
           alt="Cocktail Thumbnail"
         />
-        <CardContent>
-          <Stack direction="row" justifyContent="space-between">
-            <Typography gutterBottom variant="h5" component="div">
+        <CardContent sx={{padding: '1em'}}>
+          <Stack direction="row" justifyContent="space-between" alignItems='center'>
+            <Typography variant="h5" component="div">
               {cocktail.strDrink}
             </Typography>
             <Tooltip title="Save">
@@ -78,6 +79,7 @@ class CocktailListItem extends Component {
               </IconButton>
             </Tooltip>
           </Stack>
+          <Divider sx={{marginBottom: '1em', marginTop: '0.5em'}} />
           <Stack direction="column" spacing={1}>
             <Stack direction="row" spacing={1}>
               <Chip label={cocktail.strAlcoholic} />
@@ -92,7 +94,7 @@ class CocktailListItem extends Component {
             </Typography>
           </Stack>
         </CardContent>
-        <CardActions>
+        <CardActions sx={{padding: '1em'}}>
           <Button
             variant="outlined"
             color="secondary"
@@ -121,10 +123,11 @@ class CocktailListItem extends Component {
               id="modal-modal-title"
               variant="h6"
               component="h2"
-              sx={{ marginBottom: "1em" }}
+              sx={{ marginBottom: "0.5em" }}
             >
               Share The Cocktail!
             </Typography>
+            <Divider sx={{marginBottom: '1em'}} />
             <Stack direction="row">
               <OutlinedInput value={shareURL} fullWidth />
               <Button
