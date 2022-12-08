@@ -17,7 +17,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/reset" element={<Reset />} />
             <Route path="/search/:cocktail" element={<Search />} />
-            <Route path='/dashboard/:id' element={<CocktailDetails />} />
+            <Route path='/cocktail/:id' element={<CocktailDetails />} />
           </Routes>
         </Router>
     </div>

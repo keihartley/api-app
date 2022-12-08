@@ -1,99 +1,141 @@
 import {
+  Box,
   Button,
-  ButtonGroup,
   Card,
   CardActions,
   CardContent,
   CardMedia,
+  Chip,
   Grid,
-  List,
-  ListItem,
-  ListItemText,
-  ListSubheader,
+  IconButton,
+  Modal,
+  OutlinedInput,
+  Tooltip,
   Typography,
 } from "@mui/material";
-import React, { Component } from "react";
+import { Stack } from "@mui/system";
+import React, { Component, Fragment } from "react";
+import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  bgcolor: "background.paper",
+  width: "40%",
+  boxShadow: 24,
+  pt: 2,
+  px: 4,
+  pb: 3,
+};
 
 class CocktailListItem extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+    };
+    this.handleModal = this.handleModal.bind(this);
+  }
+
+  handleModal() {
+    const open = this.state.open;
+    console.log(open);
+    this.setState({ open: !open });
+  }
+
   render() {
     const { cocktail, navigate } = this.props;
-    const keys = Object.keys(cocktail);
-
-    const findKeys = (substring) => {
-      const res = [];
-      keys.forEach(function(key) {
-        if (key.includes(substring)) {
-          res.push(key)
-        }
-      })
-      return res;
-    };
-
-    const ingredientKeys = findKeys("strIngredient");
-    const measureKeys = findKeys("strMeasure");
-
-    const findVals = (keys) => {
-      const vals = [];
-      keys.forEach(function (key) {
-        const val = cocktail[key];
-        if (val !== null) {
-          vals.push(val);
-        }
-      });
-      return vals;
-    };
-
-    const ingredients = findVals(ingredientKeys);
-    const measures = findVals(measureKeys);
+    const shareURL = `https://api-app-23303.web.app/cocktail/${cocktail.idDrink}`;
 
     const handleClick = () => {
-      navigate(`/dashboard/${cocktail.idDrink}`);
+      navigate(`/cocktail/${cocktail.idDrink}`);
     };
 
-    return (
-      <Grid item xs={12} sm={6} md={4}>
-        <Card sx={{ height: "100%" }} raised>
-          <CardMedia component="img" image={cocktail.strDrinkThumb} alt="#" />
-          <CardContent>
+    function readMore(str, max = 10) {
+      const array = str.trim().split(" ");
+      const ellipsis = array.length > max ? "..." : "";
+      return array.slice(0, max).join(" ") + ellipsis;
+    }
+
+    const card = (
+      <Fragment>
+        <CardMedia
+          component="img"
+          image={cocktail.strDrinkThumb}
+          alt="Cocktail Thumbnail"
+        />
+        <CardContent>
+          <Stack direction="row" justifyContent="space-between">
             <Typography gutterBottom variant="h5" component="div">
               {cocktail.strDrink}
             </Typography>
-            <Typography variant="body1" color="text.secondary">
-              Category: {cocktail.strAlcoholic} & {cocktail.strCategory}
+            <Tooltip title="Save">
+              <IconButton>
+                <LibraryAddIcon />
+              </IconButton>
+            </Tooltip>
+          </Stack>
+          <Stack direction="column" spacing={1}>
+            <Stack direction="row" spacing={1}>
+              <Chip label={cocktail.strAlcoholic} />
+              <Chip label={cocktail.strCategory} variant="outlined" />
+            </Stack>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ height: "40px" }}
+            >
+              {readMore("Instructions: " + cocktail.strInstructions, 16)}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Instructions: {cocktail.strInstructions}
+          </Stack>
+        </CardContent>
+        <CardActions>
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={this.handleModal}
+          >
+            Share
+          </Button>
+          <Button variant="contained" onClick={handleClick}>
+            Learn More
+          </Button>
+        </CardActions>
+      </Fragment>
+    );
+
+    return (
+      <Grid item xs={12} sm={6} md={4}>
+        <Card variant="outlined">{card}</Card>
+        <Modal
+          open={this.state.open}
+          onClose={this.handleModal}
+          aria-labelledby="parent-modal-title"
+          aria-describedby="parent-modal-description"
+        >
+          <Box sx={style}>
+            <Typography
+              id="modal-modal-title"
+              variant="h6"
+              component="h2"
+              sx={{ marginBottom: "1em" }}
+            >
+              Share The Cocktail!
             </Typography>
-            <Grid container direction="row" alignItems="flex-start">
-              <Grid item>
-                <List>
-                  <ListSubheader>Ingredients</ListSubheader>
-                  {ingredients.map((ingredient, index) => (
-                    <ListItem key={index}>
-                      <ListItemText>{ingredient}</ListItemText>
-                    </ListItem>
-                  ))}
-                </List>
-              </Grid>
-              <Grid item>
-                <List>
-                  <ListSubheader>Measurements</ListSubheader>
-                  {measures.map((measure, index) => (
-                    <ListItem key={index}>
-                      <ListItemText>{measure}</ListItemText>
-                    </ListItem>
-                  ))}
-                </List>
-              </Grid>
-            </Grid>
-          </CardContent>
-          <CardActions>
-            <ButtonGroup variant="outlined" fullWidth={true}>
-              <Button onClick={handleClick}>View More</Button>
-              <Button color="secondary">Save To Profile</Button>
-            </ButtonGroup>
-          </CardActions>
-        </Card>
+            <Stack direction="row">
+              <OutlinedInput value={shareURL} fullWidth />
+              <Button
+                startIcon={<ContentCopyIcon />}
+                sx={{ padding: "1em 2em" }}
+              >
+                Copy
+              </Button>
+            </Stack>
+          </Box>
+        </Modal>
       </Grid>
     );
   }

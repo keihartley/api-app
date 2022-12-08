@@ -38,7 +38,7 @@ function Dashboard() {
       <Typography
         align="center"
         gutterBottom={true}
-        variant="h3"
+        variant="h4"
         sx={{ margin: "1em" }}
       >
         Discover Cocktails!
