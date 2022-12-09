@@ -1,33 +1,15 @@
 import { useParams } from "react-router-dom";
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 import { Grid, LinearProgress } from "@mui/material";
 import { Box } from "@mui/system";
 import CocktailListItem from "../../Components/CocktailList/CocktailListItem";
 import Bar from "../../Components/Nav/Bar";
+import useFetchCocktail from '../../Tools/Hooks/useFetchCocktail';
 
 function Search() {
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
   const { cocktail } = useParams();
-
-  useEffect(() => {
-    const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${cocktail}`;
-    console.log(url)
-    async function fetchCocktail() {
-      setLoading(true);
-      await axios
-        .get(url)
-        .then((res) => {
-          setData(res.data.drinks);
-        })
-        .catch((err) => {
-          console.error(err);
-        })
-        .finally(() => setLoading(false));
-    };
-    fetchCocktail()
-  }, [cocktail]);
+  const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${cocktail}`;
+  const {data, loading} = useFetchCocktail(url);
 
   return (
     <Box sx={{ height: "100%" }}>

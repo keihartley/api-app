@@ -10,46 +10,80 @@ import {
   ListItem,
   ListItemText,
   ListSubheader,
+  Modal,
+  OutlinedInput,
   Stack,
   Tooltip,
   Typography,
 } from "@mui/material";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { Box } from "@mui/system";
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Bar from "../Nav/Bar";
 import getInfo from "./cocktailFunctions";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
+import useFetchCocktail from "../../Tools/Hooks/useFetchCocktail";
+import { useState } from "react";
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import { useEffect } from "react";
+import useGetSaved from "../../Tools/Hooks/useGetSaved";
+import { auth, db } from "../../Tools/Firebase/firebase";
+import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 
-function CocktailDetails() {
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  bgcolor: "#fff",
+  width: "40%",
+  boxShadow: 24,
+  pt: 2,
+  px: 4,
+  pb: 3,
+};
+
+export default function CocktailDetails() {
+  const [save, setSave] = useState(false);
+  const [open, setOpen] = useState(false);
   const { id } = useParams();
-
-  useEffect(() => {
-    const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
-    console.log(url);
-    async function fetchCocktail() {
-      setLoading(true);
-      await axios
-        .get(url)
-        .then((res) => {
-          setData(res.data.drinks[0]);
-        })
-        .catch((err) => {
-          console.error(err);
-        })
-        .finally(() => setLoading(false));
-    }
-    fetchCocktail();
-  }, [id]);
-
+  const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
+  const { data, loading } = useFetchCocktail(url);
   const keys = Object.keys(data);
   const ingredients = getInfo(keys, "strIngredient", data);
   const measurements = getInfo(keys, "strMeasure", data);
+  const { saved } = useGetSaved();
+  const shareURL = `https://api-app-23303.web.app/cocktail/${data.idDrink}`;
 
-  console.log(ingredients, measurements);
+  useEffect(() => {
+    if (saved && save.idDrink === data.idDrink) {
+      setSave(true);
+    }
+  }, [saved, data.idDrink, save.idDrink]);
+
+  function handleModal() {
+    setOpen(!open);
+  }
+
+  async function handleSave() {
+    let uid = await auth.currentUser.uid;
+    if (uid) {
+      const savedRef = doc(db, "saved", auth.currentUser.uid);
+      if (save) {
+        await updateDoc(savedRef, {
+          saved: arrayRemove(data),
+        });
+        setSave(false);
+      } else {
+        await updateDoc(savedRef, {
+          saved: arrayUnion(data),
+        });
+        setSave(true);
+      }
+    }
+  }
+
+  //console.log(ingredients, measurements);
   return (
     <Box>
       <Bar />
@@ -76,12 +110,26 @@ function CocktailDetails() {
               <Stack direction="row" justifyContent="space-between">
                 <Typography variant="h4">{data.strDrink}</Typography>
                 <div>
-                  <Tooltip title="Save">
-                    <IconButton>
-                      <LibraryAddIcon />
-                    </IconButton>
-                  </Tooltip>
-                  <Button variant='contained' sx={{marginLeft: '1em'}}>Share</Button>
+                  {save ? (
+                    <Tooltip title="Remove">
+                      <IconButton onClick={handleSave}>
+                        <RemoveCircleIcon />
+                      </IconButton>
+                    </Tooltip>
+                  ) : (
+                    <Tooltip title="Save">
+                      <IconButton onClick={handleSave}>
+                        <LibraryAddIcon />
+                      </IconButton>
+                    </Tooltip>
+                  )}
+                  <Button
+                    variant="contained"
+                    sx={{ marginLeft: "1em" }}
+                    onClick={handleModal}
+                  >
+                    Share
+                  </Button>
                 </div>
               </Stack>
               <Divider />
@@ -110,9 +158,35 @@ function CocktailDetails() {
               </Stack>
             </Stack>
           </Card>
+          <Modal
+            open={open}
+            onClose={handleModal}
+            aria-labelledby="parent-modal-title"
+            aria-describedby="parent-modal-description"
+          >
+            <Box sx={style}>
+              <Typography
+                id="modal-modal-title"
+                variant="h6"
+                component="h2"
+                sx={{ marginBottom: "0.5em" }}
+              >
+                Share The Cocktail!
+              </Typography>
+              <Divider sx={{ marginBottom: "1em" }} />
+              <Stack direction="row">
+                <OutlinedInput value={shareURL} fullWidth />
+                <Button
+                  startIcon={<ContentCopyIcon />}
+                  sx={{ padding: "1em 2em" }}
+                >
+                  Copy
+                </Button>
+              </Stack>
+            </Box>
+          </Modal>
         </Grid>
       </Grid>
     </Box>
   );
 }
-export default CocktailDetails;

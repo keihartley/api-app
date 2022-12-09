@@ -8,37 +8,11 @@ import {
   Stack,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import {
-  doc,
-  getDoc,
-} from "firebase/firestore";
-import { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
 import Bar from "../../Components/Nav/Bar";
-import { auth, db } from "../../Tools/Firebase/firebase";
+import useGetSaved from '../../Tools/Hooks/useGetSaved';
 
 export default function Saved() {
-  const [saved, setSaved] = useState(null);
-  const [user] = useAuthState(auth);
-
-  useEffect(() => {
-    async function getSave(uid) {
-      const docRef = doc(db, "saved", uid);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setSaved(docSnap.data().saved);
-      } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
-      }
-    }
-
-    if (user) {
-      getSave(user.uid);
-    }
-  }, [user]);
-
-  console.log(saved);
+  const {saved} = useGetSaved();
 
   return (
     <Box>

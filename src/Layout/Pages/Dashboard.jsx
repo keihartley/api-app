@@ -1,35 +1,15 @@
 import { Box } from "@mui/system";
-import React, { useState, useCallback, useEffect } from "react";
+import React from "react";
 import Bar from "../../Components/Nav/Bar";
-import axios from "axios";
 import { Divider, Grid, LinearProgress, Typography } from "@mui/material";
 import CocktailListItem from "../../Components/CocktailList/CocktailListItem";
-import { useNavigate } from "react-router-dom";
+import useFetchCocktail from '../../Tools/Hooks/useFetchCocktail';
 
 function Dashboard() {
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
 
   // list of all cocktails by first letter
   const url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?f=a";
-
-  const fetchCocktail = useCallback(() => {
-    setLoading(true);
-    axios
-      .get(url)
-      .then((res) => {
-        setData(res.data.drinks);
-      })
-      .catch((err) => {
-        console.error(err);
-      })
-      .finally(() => setLoading(false));
-  }, []);
-
-  useEffect(() => {
-    fetchCocktail();
-  }, [fetchCocktail]);
+  const {loading, data} = useFetchCocktail(url);
 
   return (
     <Box sx={{ height: "100%" }}>
@@ -51,7 +31,7 @@ function Dashboard() {
         alignItems="stretch"
       >
         {data.map((item) => (
-            <CocktailListItem cocktail={item} navigate={navigate} key={item.idDrink}/>
+            <CocktailListItem cocktail={item} key={item.idDrink}/>
         ))}
       </Grid>
     </Box>
