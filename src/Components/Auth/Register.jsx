@@ -6,7 +6,8 @@ import {
   signInWithGoogle,
 } from "../../Tools/Firebase/auth";
 import { auth } from "../../Tools/Firebase/firebase";
-import { Button, Input, Typography, Stack, Box } from "@mui/material";
+import { Button, Input, Typography, Stack, Box, Paper } from "@mui/material";
+import background from '../../Assets/AuthBackground.jpg';
 
 function Register() {
   const [user, loading] = useAuthState(auth);
@@ -27,11 +28,12 @@ function Register() {
   }, [user, loading, navigate]);
   return (
     <Box
-      sx={{ width: "100%", height: "100%" }}
+      sx={{ width: "100%", height: "100%", backgroundImage: `url(${background})` }}
       display="flex"
       justifyContent="center"
       alignItems="center"
     >
+      <Paper elevation={6} sx={{padding: '3em'}}>
       <Stack
         justifyContent="center"
         alignItems="stretch"
@@ -93,6 +95,7 @@ function Register() {
           Already have an account? <Link to="/">Login here</Link>
         </Typography>
       </Stack>
+      </Paper>
     </Box>
   );
 }
