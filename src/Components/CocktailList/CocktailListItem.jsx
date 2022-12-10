@@ -25,6 +25,7 @@ import { useState } from "react";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import CustomAlert from '../Custom/CustomAlert';
 
 const style = {
   position: "absolute",
@@ -42,6 +43,7 @@ const style = {
 export default function CocktailListItem({ cocktail }) {
   const [open, setOpen] = useState(false);
   const [save, setSave] = useState(false);
+  const [saveAlert, setSaveAlert] = useState(false);
   const navigate = useNavigate();
   const shareURL = `https://api-app-23303.web.app/cocktail/${cocktail.idDrink}`;
   const { saved } = useGetSaved();
@@ -80,6 +82,7 @@ export default function CocktailListItem({ cocktail }) {
         setSave(true);
       }
     }
+    setSaveAlert(true);
   }
 
   function readMore(str, max = 10) {
@@ -87,6 +90,7 @@ export default function CocktailListItem({ cocktail }) {
     const ellipsis = array.length > max ? "..." : "";
     return array.slice(0, max).join(" ") + ellipsis;
   }
+  
 
   const card = (
     <Fragment>
@@ -145,8 +149,13 @@ export default function CocktailListItem({ cocktail }) {
   );
 
   return (
-    <Grid item xs={12} sm={6} md={4}>
-      <Card variant="outlined">{card}</Card>
+    <Grid
+      item
+    >
+      {saveAlert && (
+        <CustomAlert title="Success!" message={save ? `${cocktail.strDrink}'s was saved to your profile.`: `${cocktail.strDrink}'s was removed from your profile.`} severity="success" show={saveAlert} setShow={setSaveAlert} />
+      )}
+      <Card variant="outlined" sx={{maxWidth: 300}}>{card}</Card>
       <Modal
         open={open}
         onClose={handleModal}
@@ -165,7 +174,7 @@ export default function CocktailListItem({ cocktail }) {
           <Divider sx={{ marginBottom: "1em" }} />
           <Stack direction="row">
             <OutlinedInput value={shareURL} fullWidth />
-            <Button startIcon={<ContentCopyIcon />} sx={{ padding: "1em 2em" }}>
+            <Button startIcon={<ContentCopyIcon />} sx={{ padding: "1em 2em" }} onClick={() => {navigator.clipboard.writeText(shareURL)}}>
               Copy
             </Button>
           </Stack>

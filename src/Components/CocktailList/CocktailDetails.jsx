@@ -29,6 +29,7 @@ import { useEffect } from "react";
 import useGetSaved from "../../Tools/Hooks/useGetSaved";
 import { auth, db } from "../../Tools/Firebase/firebase";
 import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
+import CustomAlert from "../Custom/CustomAlert";
 
 const style = {
   position: "absolute",
@@ -46,6 +47,8 @@ const style = {
 export default function CocktailDetails() {
   const [save, setSave] = useState(false);
   const [open, setOpen] = useState(false);
+  const [copyAlert, setCopyAlert] = useState(false);
+  const [saveAlert, setSaveAlert] = useState(false);
   const { id } = useParams();
   const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
   const { data, loading } = useFetchCocktail(url);
@@ -81,11 +84,24 @@ export default function CocktailDetails() {
         setSave(true);
       }
     }
+    setSaveAlert(true);
+  }
+
+  function handleCopy() {
+    navigator.clipboard.writeText(shareURL);
+    setCopyAlert(true);
+    setOpen(false);
   }
 
   //console.log(ingredients, measurements);
   return (
     <Box>
+      {copyAlert && (
+        <CustomAlert title="Success!" message={`${data.strDrink}'s link was copied.`} severity="success" show={copyAlert} setShow={setCopyAlert} />
+      )}
+      {saveAlert && (
+        <CustomAlert title="Success!" message={save ? `${data.strDrink}'s was saved to your profile.`: `${data.strDrink}'s was removed from your profile.`} severity="success" show={saveAlert} setShow={setSaveAlert} />
+      )}
       <Bar />
       {loading && <LinearProgress />}
       <Grid container justifyContent="center">
@@ -179,6 +195,7 @@ export default function CocktailDetails() {
                 <Button
                   startIcon={<ContentCopyIcon />}
                   sx={{ padding: "1em 2em" }}
+                  onClick={handleCopy}
                 >
                   Copy
                 </Button>
