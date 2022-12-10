@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 export default function FetchCocktail(url) {
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
+    const [error, setError] = useState(null);
    
     const fetchCocktail = useCallback(() => {
       setLoading(true);
@@ -13,7 +14,7 @@ export default function FetchCocktail(url) {
           setData(res.data.drinks);
         })
         .catch((err) => {
-          console.error(err);
+          setError(err)
         })
         .finally(() => setLoading(false));
     }, [url]);
@@ -26,5 +27,5 @@ export default function FetchCocktail(url) {
       return {data: data[0], loading: loading};
     }
 
-    return {data, loading};
+    return {data, loading, error};
 }

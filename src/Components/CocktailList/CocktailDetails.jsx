@@ -30,6 +30,8 @@ import useGetSaved from "../../Tools/Hooks/useGetSaved";
 import { auth, db } from "../../Tools/Firebase/firebase";
 import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 import CustomAlert from "../Custom/CustomAlert";
+import CustomRating from '../Review/CustomRating';
+import Review from '../Review/Review';
 
 const style = {
   position: "absolute",
@@ -149,6 +151,7 @@ export default function CocktailDetails() {
                 </div>
               </Stack>
               <Divider />
+              <CustomRating id={id} />
               <Typography>Type: {data.strAlcoholic}</Typography>
               <Typography>Category: {data.strCategory}</Typography>
               <Typography>Served in {data.strGlass}</Typography>
@@ -172,6 +175,7 @@ export default function CocktailDetails() {
                   ))}
                 </List>
               </Stack>
+              <Review />
             </Stack>
           </Card>
           <Modal
