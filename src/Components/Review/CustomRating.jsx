@@ -4,7 +4,7 @@ import { useState } from 'react';
 import useGetRating from '../../Tools/Hooks/useGetRating';
 
 export default function CustomRating({id}) {
-    const {ave, loading, rating} = useGetRating(id);
+    const {ave, loading} = useGetRating(id);
     const [val, setVal] = useState(ave);
 
     useEffect(() => {
