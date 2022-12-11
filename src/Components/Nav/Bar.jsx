@@ -17,7 +17,12 @@ import { logout } from "../../Tools/Firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../Tools/Firebase/firebase";
-import { AccountCircle, Logout, Settings, LibraryAddOutlined } from "@mui/icons-material";
+import {
+  AccountCircle,
+  Logout,
+  Settings,
+  LibraryAddOutlined,
+} from "@mui/icons-material";
 import { styled, alpha } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 
@@ -165,29 +170,18 @@ function Bar() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <Tooltip title="In progress" placement='top' arrow>
-          <MenuItem>
-            <Avatar /> My account
-          </MenuItem>
-        </Tooltip>
-        <Divider />
-        <Tooltip title="In progress" placement='top' arrow>
-          <MenuItem>
-            <ListItemIcon>
-              <Settings fontSize="small" />
-            </ListItemIcon>
-            Settings
-          </MenuItem>
-        </Tooltip>
-        <Tooltip title="In progress" placement='top' arrow>
-          <MenuItem onClick={() => navigate('/profile/saved')}>
-            <ListItemIcon>
-              <LibraryAddOutlined fontSize="small" />
-            </ListItemIcon>
-            Saved
-          </MenuItem>
-        </Tooltip>
-
+        <MenuItem onClick={() => navigate("/profile/settings")}>
+          <ListItemIcon>
+            <Settings fontSize="small" />
+          </ListItemIcon>
+          Settings
+        </MenuItem>
+        <MenuItem onClick={() => navigate("/profile/saved")}>
+          <ListItemIcon>
+            <LibraryAddOutlined fontSize="small" />
+          </ListItemIcon>
+          Saved
+        </MenuItem>
         <MenuItem onClick={logout}>
           <ListItemIcon>
             <Logout fontSize="small" />

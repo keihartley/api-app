@@ -16,22 +16,6 @@ function Dashboard() {
   const url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?f=a";
   const { loading, data } = useFetchCocktail(url);
 
-  if (data.length === 0) {
-    return (
-      <Box sx={{ height: "100%" }}>
-        <Bar />
-        <Typography
-          align="center"
-          gutterBottom={true}
-          variant="h4"
-          sx={{ margin: "2em" }}
-        >
-          API Server Responded with an error. Please try again at a later time
-        </Typography>
-      </Box>
-    );
-  }
-
   return (
     <Box sx={{ height: "100%" }}>
       <Bar />

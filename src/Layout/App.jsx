@@ -6,6 +6,7 @@ import Reset from "../Components/Auth/Reset";
 import Search from "./Pages/Search";
 import CocktailDetails from '../Components/CocktailList/CocktailDetails'
 import Saved from './Pages/Saved';
+import Settings from "./Pages/Settings";
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
             <Route path="/search/:cocktail" element={<Search />} />
             <Route path='/cocktail/:id' element={<CocktailDetails />} />
             <Route path='/profile/saved' element={<Saved />} />
+            <Route path='profile/settings' element={<Settings />} />
           </Routes>
         </Router>
     </div>
