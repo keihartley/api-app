@@ -30,8 +30,8 @@ import useGetSaved from "../../Tools/Hooks/useGetSaved";
 import { auth, db } from "../../Tools/Firebase/firebase";
 import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 import CustomAlert from "../Custom/CustomAlert";
-import CustomRating from '../Review/CustomRating';
-import Review from '../Review/Review';
+import CustomRating from "../Review/CustomRating";
+import Review from "../Review/Review";
 
 const style = {
   position: "absolute",
@@ -99,10 +99,26 @@ export default function CocktailDetails() {
   return (
     <Box>
       {copyAlert && (
-        <CustomAlert title="Success!" message={`${data.strDrink}'s link was copied.`} severity="success" show={copyAlert} setShow={setCopyAlert} />
+        <CustomAlert
+          title="Success!"
+          message={`${data.strDrink}'s link was copied.`}
+          severity="success"
+          show={copyAlert}
+          setShow={setCopyAlert}
+        />
       )}
       {saveAlert && (
-        <CustomAlert title="Success!" message={save ? `${data.strDrink}'s was saved to your profile.`: `${data.strDrink}'s was removed from your profile.`} severity="success" show={saveAlert} setShow={setSaveAlert} />
+        <CustomAlert
+          title="Success!"
+          message={
+            save
+              ? `${data.strDrink}'s was saved to your profile.`
+              : `${data.strDrink}'s was removed from your profile.`
+          }
+          severity="success"
+          show={saveAlert}
+          setShow={setSaveAlert}
+        />
       )}
       <Bar />
       {loading && <LinearProgress />}

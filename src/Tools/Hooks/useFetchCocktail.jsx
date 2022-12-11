@@ -2,30 +2,30 @@ import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 
 export default function FetchCocktail(url) {
-    const [loading, setLoading] = useState(false);
-    const [data, setData] = useState([]);
-    const [error, setError] = useState(null);
-   
-    const fetchCocktail = useCallback(() => {
-      setLoading(true);
-      axios
-        .get(url)
-        .then((res) => {
-          setData(res.data.drinks);
-        })
-        .catch((err) => {
-          setError(err)
-        })
-        .finally(() => setLoading(false));
-    }, [url]);
-  
-    useEffect(() => {
-      fetchCocktail();
-    }, [fetchCocktail]);
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
 
-    if (data.length === 1) {
-      return {data: data[0], loading: loading};
-    }
+  const fetchCocktail = useCallback(() => {
+    setLoading(true);
+    axios
+      .get(url)
+      .then((res) => {
+        setData(res.data.drinks);
+      })
+      .catch((err) => {
+        setError(err);
+      })
+      .finally(() => setLoading(false));
+  }, [url]);
 
-    return {data, loading, error};
+  useEffect(() => {
+    fetchCocktail();
+  }, [fetchCocktail]);
+
+  if (data.length === 1) {
+    return { data: data[0], loading: loading };
+  }
+
+  return { data, loading, error };
 }

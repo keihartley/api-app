@@ -4,7 +4,7 @@ import App from "./Layout/App";
 import reportWebVitals from "./Other/reportWebVitals";
 import "./index.css";
 import { ThemeProvider } from "@emotion/react";
-import {theme} from './Other/theme';
+import { theme } from "./Other/theme";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

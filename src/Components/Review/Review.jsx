@@ -1,5 +1,3 @@
 export default function CustomReview() {
-    return (
-        <div>Review</div>
-    )
+  return <div>Review</div>;
 }

@@ -8,7 +8,7 @@ import {
 } from "../../Tools/Firebase/auth";
 import { Button, Input, Paper, Typography } from "@mui/material";
 import { Box, Stack } from "@mui/system";
-import background from '../../Assets/AuthBackground.jpg';
+import background from "../../Assets/AuthBackground.jpg";
 
 function Login() {
   const [user, loading] = useAuthState(auth);
@@ -31,12 +31,16 @@ function Login() {
   };
   return (
     <Box
-      sx={{ width: "100%", height: "100%", backgroundImage: `url(${background})`}}
+      sx={{
+        width: "100%",
+        height: "100%",
+        backgroundImage: `url(${background})`,
+      }}
       display="flex"
       justifyContent="center"
       alignItems="center"
     >
-      <Paper elevation={6} sx={{padding: '3em'}}>
+      <Paper elevation={6} sx={{ padding: "3em" }}>
         <Stack
           justifyContent="center"
           alignItems="stretch"

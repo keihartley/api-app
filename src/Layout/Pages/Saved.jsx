@@ -9,20 +9,15 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import Bar from "../../Components/Nav/Bar";
-import useGetSaved from '../../Tools/Hooks/useGetSaved';
+import useGetSaved from "../../Tools/Hooks/useGetSaved";
 
 export default function Saved() {
-  const {saved} = useGetSaved();
+  const { saved } = useGetSaved();
 
   return (
     <Box>
       <Bar />
-      <Grid
-      container
-      spacing={4}
-      sx={{ padding: "3em" }}
-      alignItems="stretch"
-      >
+      <Grid container spacing={4} sx={{ padding: "3em" }} alignItems="stretch">
         {saved != null &&
           saved.length >= 1 &&
           saved.map((save, index) => (

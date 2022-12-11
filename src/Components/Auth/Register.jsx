@@ -7,7 +7,7 @@ import {
 } from "../../Tools/Firebase/auth";
 import { auth } from "../../Tools/Firebase/firebase";
 import { Button, Input, Typography, Stack, Box, Paper } from "@mui/material";
-import background from '../../Assets/AuthBackground.jpg';
+import background from "../../Assets/AuthBackground.jpg";
 
 function Register() {
   const [user, loading] = useAuthState(auth);
@@ -28,73 +28,77 @@ function Register() {
   }, [user, loading, navigate]);
   return (
     <Box
-      sx={{ width: "100%", height: "100%", backgroundImage: `url(${background})` }}
+      sx={{
+        width: "100%",
+        height: "100%",
+        backgroundImage: `url(${background})`,
+      }}
       display="flex"
       justifyContent="center"
       alignItems="center"
     >
-      <Paper elevation={6} sx={{padding: '3em'}}>
-      <Stack
-        justifyContent="center"
-        alignItems="stretch"
-        spacing={2}
-        direction="column"
-        component="form"
-        onSubmit={handleSubmit}
-        noValidate
-        sx={{ mt: 1 }}
-      >
-        <Typography variant="h5">Register</Typography>
-        <Input
-          required
-          fullWidth
-          id="username"
-          placeholder="Username"
-          name="username"
-          autoComplete="username"
-          type="text"
-          autoFocus
-        />
-        <Input
-          required
-          fullWidth
-          id="email"
-          placeholder="Email Address"
-          name="email"
-          autoComplete="email"
-          type="email"
-          autoFocus
-        />
-        <Input
-          required
-          fullWidth
-          id="password"
-          placeholder="Password"
-          name="password"
-          autoComplete="password"
-          type="password"
-          autoFocus
-        />
-        <Button
-          fullWidth
-          type="submit"
-          sx={{ mt: 3, mb: 2 }}
-          variant="contained"
+      <Paper elevation={6} sx={{ padding: "3em" }}>
+        <Stack
+          justifyContent="center"
+          alignItems="stretch"
+          spacing={2}
+          direction="column"
+          component="form"
+          onSubmit={handleSubmit}
+          noValidate
+          sx={{ mt: 1 }}
         >
-          Register
-        </Button>
-        <Button
-          onClick={signInWithGoogle}
-          fullWidth
-          variant="outlined"
-          sx={{ mt: 3, mb: 2 }}
-        >
-          Register With Google
-        </Button>
-        <Typography>
-          Already have an account? <Link to="/">Login here</Link>
-        </Typography>
-      </Stack>
+          <Typography variant="h5">Register</Typography>
+          <Input
+            required
+            fullWidth
+            id="username"
+            placeholder="Username"
+            name="username"
+            autoComplete="username"
+            type="text"
+            autoFocus
+          />
+          <Input
+            required
+            fullWidth
+            id="email"
+            placeholder="Email Address"
+            name="email"
+            autoComplete="email"
+            type="email"
+            autoFocus
+          />
+          <Input
+            required
+            fullWidth
+            id="password"
+            placeholder="Password"
+            name="password"
+            autoComplete="password"
+            type="password"
+            autoFocus
+          />
+          <Button
+            fullWidth
+            type="submit"
+            sx={{ mt: 3, mb: 2 }}
+            variant="contained"
+          >
+            Register
+          </Button>
+          <Button
+            onClick={signInWithGoogle}
+            fullWidth
+            variant="outlined"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Register With Google
+          </Button>
+          <Typography>
+            Already have an account? <Link to="/">Login here</Link>
+          </Typography>
+        </Stack>
       </Paper>
     </Box>
   );

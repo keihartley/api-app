@@ -56,24 +56,24 @@ export default function Settings() {
   return (
     <Box sx={{ height: "100%" }}>
       <Bar />
-      <Grid container justifyContent='center'>
-      <Paper sx={{ width: 2/3, padding: "2em", margin: '3em' }}>
-        <Grid container direction="column" justifyContent="center">
-        <Typography align="center" variant="h5">
-            Settings
-          </Typography>
-          <Typography align="center" variant="subtitle2">
-            Page In Progress
-          </Typography>
-          <Setting type="Profile" val={prof} />
-          <Divider />
-          <Setting type="Display Name" val={display} />
-          <Divider />
-          <Setting type="Theme" val={theme} />
-          <Divider />
-          <Setting type="Delete" val={del} />
-        </Grid>
-      </Paper>
+      <Grid container justifyContent="center">
+        <Paper sx={{ width: 2 / 3, padding: "2em", margin: "3em" }}>
+          <Grid container direction="column" justifyContent="center">
+            <Typography align="center" variant="h5">
+              Settings
+            </Typography>
+            <Typography align="center" variant="subtitle2">
+              Page In Progress
+            </Typography>
+            <Setting type="Profile" val={prof} />
+            <Divider />
+            <Setting type="Display Name" val={display} />
+            <Divider />
+            <Setting type="Theme" val={theme} />
+            <Divider />
+            <Setting type="Delete" val={del} />
+          </Grid>
+        </Paper>
       </Grid>
     </Box>
   );

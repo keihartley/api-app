@@ -4,12 +4,12 @@ import { Grid, LinearProgress } from "@mui/material";
 import { Box } from "@mui/system";
 import CocktailListItem from "../../Components/CocktailList/CocktailListItem";
 import Bar from "../../Components/Nav/Bar";
-import useFetchCocktail from '../../Tools/Hooks/useFetchCocktail';
+import useFetchCocktail from "../../Tools/Hooks/useFetchCocktail";
 
 function Search() {
   const { cocktail } = useParams();
   const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${cocktail}`;
-  const {data, loading} = useFetchCocktail(url);
+  const { data, loading } = useFetchCocktail(url);
 
   return (
     <Box sx={{ height: "100%" }}>

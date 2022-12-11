@@ -26,7 +26,11 @@ function Reset() {
 
   return (
     <Box
-      sx={{ width: "100%", height: "100%", backgroundImage: `url(${background})` }}
+      sx={{
+        width: "100%",
+        height: "100%",
+        backgroundImage: `url(${background})`,
+      }}
       display="flex"
       justifyContent="center"
       alignItems="center"

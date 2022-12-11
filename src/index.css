@@ -1,9 +1,13 @@
-html, body {
-    margin: 0;
-    padding: 0;
+html,
+body {
+  margin: 0;
+  padding: 0;
 }
 
-html, body, #root, .App {
-    height: 100vh;
-    width: auto;
+html,
+body,
+#root,
+.App {
+  height: 100vh;
+  width: auto;
 }

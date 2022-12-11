@@ -46,16 +46,16 @@ export const registerWithEmailAndPassword = async (
   email,
   password
 ) => {
-  await createUserWithEmailAndPassword(auth, email, password).then(
-    (credential) => {
+  await createUserWithEmailAndPassword(auth, email, password)
+    .then((credential) => {
       const user = credential.user;
-      updateProfile(user, { displayName: username })
+      updateProfile(user, { displayName: username });
       createSaved(user);
-    }
-  ).catch((err) => {
-    console.error(err)
-    alert(err)
-  });
+    })
+    .catch((err) => {
+      console.error(err);
+      alert(err);
+    });
 };
 
 export const sendPasswordReset = async (email) => {

@@ -1,8 +1,13 @@
 import { Alert, AlertTitle, Slide } from "@mui/material";
 import { useEffect } from "react";
 
-export default function CustomAlerts({ severity, title, message, show, setShow }) {
-
+export default function CustomAlerts({
+  severity,
+  title,
+  message,
+  show,
+  setShow,
+}) {
   useEffect(() => {
     const timeId = setTimeout(() => {
       setShow(false);

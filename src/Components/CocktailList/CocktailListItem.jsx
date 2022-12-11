@@ -25,7 +25,8 @@ import { useState } from "react";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import CustomAlert from '../Custom/CustomAlert';
+import CustomRating from "../Review/CustomRating";
+import CustomAlert from "../Custom/CustomAlert";
 
 const style = {
   position: "absolute",
@@ -90,7 +91,6 @@ export default function CocktailListItem({ cocktail }) {
     const ellipsis = array.length > max ? "..." : "";
     return array.slice(0, max).join(" ") + ellipsis;
   }
-  
 
   const card = (
     <Fragment>
@@ -124,6 +124,7 @@ export default function CocktailListItem({ cocktail }) {
         </Stack>
         <Divider sx={{ marginBottom: "1em", marginTop: "0.5em" }} />
         <Stack direction="column" spacing={1}>
+          <CustomRating id={cocktail.idDrink} readOnly={true} />
           <Stack direction="row" spacing={1}>
             <Chip label={cocktail.strAlcoholic} />
             <Chip label={cocktail.strCategory} variant="outlined" />
@@ -149,13 +150,23 @@ export default function CocktailListItem({ cocktail }) {
   );
 
   return (
-    <Grid
-      item
-    >
+    <Grid item>
       {saveAlert && (
-        <CustomAlert title="Success!" message={save ? `${cocktail.strDrink}'s was saved to your profile.`: `${cocktail.strDrink}'s was removed from your profile.`} severity="success" show={saveAlert} setShow={setSaveAlert} />
+        <CustomAlert
+          title="Success!"
+          message={
+            save
+              ? `${cocktail.strDrink}'s was saved to your profile.`
+              : `${cocktail.strDrink}'s was removed from your profile.`
+          }
+          severity="success"
+          show={saveAlert}
+          setShow={setSaveAlert}
+        />
       )}
-      <Card variant="outlined" sx={{maxWidth: 300}}>{card}</Card>
+      <Card variant="outlined" sx={{ maxWidth: 300 }}>
+        {card}
+      </Card>
       <Modal
         open={open}
         onClose={handleModal}
@@ -174,7 +185,13 @@ export default function CocktailListItem({ cocktail }) {
           <Divider sx={{ marginBottom: "1em" }} />
           <Stack direction="row">
             <OutlinedInput value={shareURL} fullWidth />
-            <Button startIcon={<ContentCopyIcon />} sx={{ padding: "1em 2em" }} onClick={() => {navigator.clipboard.writeText(shareURL)}}>
+            <Button
+              startIcon={<ContentCopyIcon />}
+              sx={{ padding: "1em 2em" }}
+              onClick={() => {
+                navigator.clipboard.writeText(shareURL);
+              }}
+            >
               Copy
             </Button>
           </Stack>
