@@ -1,13 +1,10 @@
-import { CircularProgress, Rating, Typography } from "@mui/material";
+import { CircularProgress, Rating } from "@mui/material";
 import { Stack } from "@mui/system";
 import {
   doc,
   getDoc,
-  getDocs,
-  query,
   setDoc,
   updateDoc,
-  where,
 } from "firebase/firestore";
 import { useEffect } from "react";
 import { useState } from "react";
