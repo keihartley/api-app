@@ -2,12 +2,19 @@
 
 URL: https://api-app-23303.web.app/
 
+## Purpose
+- Practice for utilizing and organizing data fetched from an API
+- Allows users to see many cocktails, ingredients, and instructions & share with others.
+- Users will be able to save cocktails to their profile and explore based on drink categories and glass types
+- Planning to add a feature to allow users to review drinks through a rating system and photos. 
+
 ## Utilized Tools
 
-- Material UI: Frontend user interface NPM package
-- React.js: Building the user interface
-- Firebase: Handles the backend & data (Firestore), authenticates users, and hosts/deploys the application
-- API: Still picking an API from [RapidAPI](https://rapidapi.com/)
+- Material UI, utilized for building the user interface
+- React.js to build the front-end of the app
+- Firebase: manage user authentication, ratings, saved cocktails, and hosting the website on a url
+- Cocktails API, fetched data from this API to populate the user interface with content (Axios for fetching)
+- Git & Github: Version control management and workflows for automatic deployment to Firebase Hosting
 
 ## Purpose
 
