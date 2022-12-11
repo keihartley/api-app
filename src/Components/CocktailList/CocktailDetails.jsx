@@ -191,7 +191,7 @@ export default function CocktailDetails() {
                   ))}
                 </List>
               </Stack>
-              <Review />
+              <Review id={id} />
             </Stack>
           </Card>
           <Modal

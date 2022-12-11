@@ -23,11 +23,11 @@ export default function CustomRating({ id, readOnly = false }) {
 
   async function handleRating(newVal) {
     let uid = await auth.currentUser.uid;
+    setVal(newVal);
     if (uid) {
       const ratingRef = doc(db, "ratings", id);
       const docSnap = await getDoc(ratingRef);
       if (docSnap.exists()) {
-        console.log(docSnap.data());
         await updateDoc(ratingRef, {
           [`${uid}`]: {
             rating: newVal,
@@ -40,7 +40,6 @@ export default function CustomRating({ id, readOnly = false }) {
           },
         });
       }
-      setVal(newVal);
     }
   }
 
