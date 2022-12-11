@@ -16,10 +16,6 @@ URL: https://api-app-23303.web.app/
 - Cocktails API, fetched data from this API to populate the user interface with content (Axios for fetching)
 - Git & Github: Version control management and workflows for automatic deployment to Firebase Hosting
 
-## Purpose
-
-Will add once the API is added
-
 ## Features
 
 - User auth, logging in and registering through email or a third party application (Google)
