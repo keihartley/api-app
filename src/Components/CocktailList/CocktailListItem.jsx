@@ -150,7 +150,7 @@ export default function CocktailListItem({ cocktail }) {
   );
 
   return (
-    <Grid item>
+    <Grid item xs={12} sm={6} md={4} xl={3}>
       {saveAlert && (
         <CustomAlert
           title="Success!"
@@ -164,7 +164,7 @@ export default function CocktailListItem({ cocktail }) {
           setShow={setSaveAlert}
         />
       )}
-      <Card variant="outlined" sx={{ maxWidth: 300 }}>
+      <Card variant="outlined">
         {card}
       </Card>
       <Modal
