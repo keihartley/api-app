@@ -40,6 +40,7 @@ function Dashboard() {
           >
             {data.map((item, index) => (
                 <CocktailListItem
+                key={index}
                 cocktail={item}
               />
             ))}
