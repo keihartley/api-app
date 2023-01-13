@@ -1,5 +1,5 @@
 import { Box } from "@mui/system";
-import React from "react";
+import React, { useEffect } from "react";
 import Bar from "../../Components/Nav/Bar";
 import {
   Container,
@@ -12,7 +12,7 @@ import CocktailListItem from "../../Components/CocktailList/CocktailListItem";
 import useFetchCocktail from "../../Tools/Hooks/useFetchCocktail";
 
 function Dashboard() {
-  // list of all cocktails by first letter
+
   const url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?f=a";
   const { loading, data } = useFetchCocktail(url);
 
@@ -38,8 +38,10 @@ function Dashboard() {
             spacing={4}
             sx={{ padding: "auto" }}
           >
-            {data.map((item) => (
-              <CocktailListItem cocktail={item} key={item.idDrink} />
+            {data.map((item, index) => (
+                <CocktailListItem
+                cocktail={item}
+              />
             ))}
           </Grid>
         </Container>
