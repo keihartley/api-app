@@ -1,22 +1,25 @@
+import { doc, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { db } from "../Firebase/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, db } from "../Firebase/firebase";
 
-export default function useSettings(currentUser) {
+export default function useSettings() {
   const [settings, setSettings] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [user] = useAuthState(auth);
 
   useEffect(() => {
-    const unsubscribe = db
-      .collection("users")
-      .doc(currentUser.uid)
-      .collection("settings")
-      .doc("settings")
-      .onSnapshot((doc) => {
-        setSettings(doc.data());
-        setLoading(false);
-      });
-    return () => unsubscribe();
-  }, [currentUser]);
+    if (user) {
+      const unsubscribe = onSnapshot(doc(db, "users", user.uid), (doc) => {
+        setSettings(doc.data().settings)
+        setLoading(false)
+      })
+      return () => unsubscribe();
+    } else {
+      setLoading(true);
+      setSettings(null);
+    }
+  }, [user]);
 
-  return [settings, loading];
+  return { settings, loading, user };
 }

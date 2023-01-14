@@ -15,11 +15,11 @@ import {
   Stack,
   Tooltip,
   Typography,
+  useTheme,
 } from "@mui/material";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { Box } from "@mui/system";
 import { useParams } from "react-router-dom";
-import Bar from "../Nav/Bar";
 import getInfo from "./cocktailFunctions";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import useFetchCocktail from "../../Tools/Hooks/useFetchCocktail";
@@ -59,6 +59,7 @@ export default function CocktailDetails() {
   const measurements = getInfo(keys, "strMeasure", data);
   const { saved } = useGetSaved();
   const shareURL = `https://api-app-23303.web.app/cocktail/${data.idDrink}`;
+  const theme = useTheme();
 
   useEffect(() => {
     if (saved && save.idDrink === data.idDrink) {
@@ -94,10 +95,9 @@ export default function CocktailDetails() {
     setCopyAlert(true);
     setOpen(false);
   }
-
-  //console.log(ingredients, measurements);
+  
   return (
-    <Box>
+    <Box sx={{background: theme.palette.background.default}}>
       {copyAlert && (
         <CustomAlert
           title="Success!"
@@ -120,7 +120,6 @@ export default function CocktailDetails() {
           setShow={setSaveAlert}
         />
       )}
-      <Bar />
       {loading && <LinearProgress />}
       <Grid container justifyContent="center">
         <Grid
@@ -142,17 +141,17 @@ export default function CocktailDetails() {
             />
             <Stack spacing={1} sx={{ padding: "2em" }}>
               <Stack direction="row" justifyContent="space-between">
-                <Typography variant="h4">{data.strDrink}</Typography>
+                <Typography variant="h4" color={theme.palette.text.surface}>{data.strDrink}</Typography>
                 <div>
                   {save ? (
                     <Tooltip title="Remove">
-                      <IconButton onClick={handleSave}>
+                      <IconButton onClick={handleSave} color='secondary'>
                         <RemoveCircleIcon />
                       </IconButton>
                     </Tooltip>
                   ) : (
                     <Tooltip title="Save">
-                      <IconButton onClick={handleSave}>
+                      <IconButton onClick={handleSave} color='secondary'>
                         <LibraryAddIcon />
                       </IconButton>
                     </Tooltip>
@@ -161,6 +160,7 @@ export default function CocktailDetails() {
                     variant="contained"
                     sx={{ marginLeft: "1em" }}
                     onClick={handleModal}
+                    color='primary'
                   >
                     Share
                   </Button>
@@ -168,13 +168,13 @@ export default function CocktailDetails() {
               </Stack>
               <Divider />
               <CustomRating id={id} />
-              <Typography>Type: {data.strAlcoholic}</Typography>
-              <Typography>Category: {data.strCategory}</Typography>
-              <Typography>Served in {data.strGlass}</Typography>
-              <Typography>Instructions: {data.strInstructions}</Typography>
+              <Typography color={theme.palette.text.surface}>Type: {data.strAlcoholic}</Typography>
+              <Typography color={theme.palette.text.surface}>Category: {data.strCategory}</Typography>
+              <Typography color={theme.palette.text.surface}>Served in {data.strGlass}</Typography>
+              <Typography color={theme.palette.text.surface}>Instructions: {data.strInstructions}</Typography>
               <Stack direction="row" spacing={1}>
-                <List>
-                  <ListSubheader>Ingredients</ListSubheader>
+                <List sx={{color: theme.palette.text.surface}}>
+                  <ListSubheader sx={{color: theme.palette.text.surface}}>Ingredients</ListSubheader>
                   {ingredients.map((ingredient, index) => (
                     <ListItem key={index}>
                       <ListItemText>{ingredient}</ListItemText>
@@ -182,8 +182,8 @@ export default function CocktailDetails() {
                   ))}
                 </List>
 
-                <List>
-                  <ListSubheader>Measurements</ListSubheader>
+                <List sx={{color: theme.palette.text.surface}}>
+                  <ListSubheader sx={{color: theme.palette.text.surface}}>Measurements</ListSubheader>
                   {measurements.map((measure, index) => (
                     <ListItem key={index}>
                       <ListItemText>{measure}</ListItemText>

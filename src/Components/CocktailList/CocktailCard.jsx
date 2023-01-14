@@ -5,12 +5,12 @@ import {
   CardContent,
   CardMedia,
   Chip,
-  Divider,
   IconButton,
   Modal,
   OutlinedInput,
   Tooltip,
   Typography,
+  useTheme,
 } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
@@ -23,14 +23,45 @@ import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import CustomAlert from "../Custom/CustomAlert";
 import useGetSaved from "../../Tools/Hooks/useGetSaved";
+import useMediaQuery from '@mui/material/useMediaQuery';
+
+const MAX_CHARS = {
+  xs: 50,
+  sm: 70,
+  md: 100,
+  lg: 140,
+  xl: 190
+}
+
+const HEIGHT = {
+  xs: '2em',
+  sm: '2.5em',
+  md: '3.0em',
+  lg: '3.5em',
+  xl: '4.0em'
+}
 
 export default function CocktailCard({ cocktail }) {
+  const [description, setDescription] = useState("");
+  const [height, setHeight] = useState(HEIGHT.md)
+  const breakpoint = useMediaQuery('(min-width:600px)') ? 'sm' : 'xs';
+  const [truncatedDescription, setTruncatedDescription] = useState(description.substring(0, MAX_CHARS[breakpoint]));
+  const theme = useTheme();
   const [save, setSave] = useState(false);
   const [saveAlert, setSaveAlert] = useState(false);
   const shareURL = `https://api-app-23303.web.app/cocktail/${cocktail.idDrink}`;
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const { saved } = useGetSaved();
+  const [overflowOpacity, setOverflowOpacity] = useState(1);
+
+  const handleOverflow = (e) => {
+    if (e.target.scrollHeight > e.target.clientHeight) {
+        setOverflowOpacity(0.5);
+    } else {
+        setOverflowOpacity(1);
+    }
+  }
 
   useEffect(() => {
     if (saved) {
@@ -41,6 +72,12 @@ export default function CocktailCard({ cocktail }) {
       });
     }
   }, [saved, cocktail.idDrink]);
+
+  useEffect(() => {
+    setDescription(cocktail.strInstructions)
+    setTruncatedDescription(description.substring(0, MAX_CHARS[breakpoint]))
+    setHeight(HEIGHT[breakpoint])
+  }, [breakpoint, cocktail, description])
 
   const style = {
     position: "absolute",
@@ -54,12 +91,6 @@ export default function CocktailCard({ cocktail }) {
     px: 4,
     pb: 3,
   };
-
-  function readMore(str, max = 10) {
-    const array = str.trim().split(" ");
-    const ellipsis = array.length > max ? "..." : "";
-    return array.slice(0, max).join(" ") + ellipsis;
-  }
 
   async function handleSave() {
     let uid = await auth.currentUser.uid;
@@ -89,102 +120,112 @@ export default function CocktailCard({ cocktail }) {
   };
 
   return (
-      <Card variant="outlined">
-        {saveAlert && (
-          <CustomAlert
-            title="Success!"
-            message={
-              save
-                ? `${cocktail.strDrink}'s was saved to your profile.`
-                : `${cocktail.strDrink}'s was removed from your profile.`
-            }
-            severity="success"
-            show={saveAlert}
-            setShow={setSaveAlert}
-          />
-        )}
-        <CardMedia
-          component="img"
-          image={cocktail.strDrinkThumb}
-          alt="Cocktail Thumbnail"
+    <Card
+      sx={{
+        color: theme.palette.text.surface,
+        background: theme.palette.background.surface,
+        height: "100%",
+        width: "100%"
+      }}
+      elevation={6}
+      square
+    >
+      {saveAlert && (
+        <CustomAlert
+          title="Success!"
+          message={
+            save
+              ? `${cocktail.strDrink}'s was saved to your profile.`
+              : `${cocktail.strDrink}'s was removed from your profile.`
+          }
+          severity="success"
+          show={saveAlert}
+          setShow={setSaveAlert}
         />
-        <CardContent sx={{ padding: "1em" }}>
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <Typography variant="h5" component="div">
-              {cocktail.strDrink}
-            </Typography>
-            {save ? (
-              <Tooltip title="Remove">
-                <IconButton onClick={handleSave}>
-                  <RemoveCircleIcon />
-                </IconButton>
-              </Tooltip>
-            ) : (
-              <Tooltip title="Save">
-                <IconButton onClick={handleSave}>
-                  <LibraryAddIcon />
-                </IconButton>
-              </Tooltip>
-            )}
-          </Stack>
-          <Divider sx={{ marginBottom: "1em", marginTop: "0.5em" }} />
-          <Stack direction="column" spacing={1}>
-            <CustomRating id={cocktail.idDrink} readOnly={true} />
-            <Stack direction="row" spacing={1}>
-              <Chip label={cocktail.strAlcoholic} />
-              <Chip label={cocktail.strCategory} variant="outlined" />
-            </Stack>
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              sx={{ height: "40px" }}
-            >
-              {readMore("Instructions: " + cocktail.strInstructions, 16)}
-            </Typography>
-          </Stack>
-        </CardContent>
-        <CardActions sx={{ padding: "1em" }}>
-          <Button variant="outlined" color="secondary" onClick={handleModal}>
-            Share
-          </Button>
-          <Button variant="contained" onClick={handleClick}>
-            Learn More
-          </Button>
-        </CardActions>
-        <Modal
-          open={open}
-          onClose={handleModal}
-          aria-labelledby="parent-modal-title"
-          aria-describedby="parent-modal-description"
+      )}
+      <CardMedia
+        component="img"
+        image={cocktail.strDrinkThumb}
+        alt="Cocktail Thumbnail"
+      />
+      <CardContent>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
         >
-          <Box sx={style}>
-            <Typography
-              id="modal-modal-title"
-              variant="h6"
-              component="h2"
-              sx={{ marginBottom: "0.5em" }}
+          <Typography
+            variant="h5"
+            component="div"
+            sx={{ paddingBottom: "0.5em" }}
+          >
+            {cocktail.strDrink}
+          </Typography>
+          {save ? (
+            <Tooltip title="Remove">
+              <IconButton onClick={handleSave}>
+                <RemoveCircleIcon />
+              </IconButton>
+            </Tooltip>
+          ) : (
+            <Tooltip title="Save">
+              <IconButton onClick={handleSave} color="primary">
+                <LibraryAddIcon />
+              </IconButton>
+            </Tooltip>
+          )}
+        </Stack>
+        <Stack direction="column" spacing={2}>
+          <CustomRating id={cocktail.idDrink} readOnly={true} />
+          <Stack direction="row" spacing={1}>
+            <Chip label={cocktail.strAlcoholic} color="secondary" />
+            <Chip
+              label={cocktail.strCategory}
+              variant="outlined"
+              color="secondary"
+            />
+          </Stack>
+          <Typography
+            variant="body2"
+            color="text.surface"
+            sx={{height: height, opacity: overflowOpacity}}
+            onWheel={handleOverflow}
+          >
+            {description.length > MAX_CHARS[breakpoint] ? truncatedDescription + '... read more...' : description}
+          </Typography>
+        </Stack>
+      </CardContent>
+      <CardActions sx={{ paddingBottom: "1.5em" }}>
+        <Button variant="outlined" color="primary" onClick={handleModal}>
+          Share
+        </Button>
+        <Button variant="contained" onClick={handleClick}>
+          Learn More
+        </Button>
+      </CardActions>
+      <Modal
+        open={open}
+        onClose={handleModal}
+        aria-labelledby="parent-modal-title"
+        aria-describedby="parent-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Share The Cocktail!
+          </Typography>
+          <Stack direction="row">
+            <OutlinedInput value={shareURL} fullWidth />
+            <Button
+              startIcon={<ContentCopyIcon />}
+              onClick={() => {
+                navigator.clipboard.writeText(shareURL);
+              }}
             >
-              Share The Cocktail!
-            </Typography>
-            <Divider sx={{ marginBottom: "1em" }} />
-            <Stack direction="row">
-              <OutlinedInput value={shareURL} fullWidth />
-              <Button
-                startIcon={<ContentCopyIcon />}
-                sx={{ padding: "1em 2em" }}
-                onClick={() => {
-                  navigator.clipboard.writeText(shareURL);
-                }}
-              >
-                Copy
-              </Button>
-            </Stack>
-          </Box>
-        </Modal>
-      </Card>
+              Copy
+            </Button>
+          </Stack>
+        </Box>
+      </Modal>
+    </Card>
   );
 }

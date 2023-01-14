@@ -2,7 +2,6 @@ import {
   Grid,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import Bar from "../../Components/Nav/Bar";
 import useGetSaved from "../../Tools/Hooks/useGetSaved";
 import CocktailListItem from '../../Components/CocktailList/CocktailListItem';
 
@@ -11,7 +10,6 @@ export default function Saved() {
 
   return (
     <Box>
-      <Bar />
       <Grid container justifyContent="center">
         <Grid
           container

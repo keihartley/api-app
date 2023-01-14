@@ -1,6 +1,6 @@
 import { Grid, Typography } from "@mui/material";
 
-export default function Setting({ type, val }) {
+export default function Setting({ type, val, theme }) {
   return (
     <Grid
       container
@@ -9,7 +9,7 @@ export default function Setting({ type, val }) {
       spacing={6}
     >
       <Grid item xs={2} justifyContent="flex-end">
-        <Typography align="right" variant="subtitle1">
+        <Typography align="right" variant="subtitle1" color={theme.palette.divider.default}>
           {type}
         </Typography>
       </Grid>

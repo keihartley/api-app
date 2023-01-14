@@ -32,8 +32,8 @@ function Login() {
   return (
     <Box
       sx={{
-        width: "100%",
-        height: "100%",
+        width: "100vw",
+        height: "100vh",
         backgroundImage: `url(${background})`,
       }}
       display="flex"
@@ -51,7 +51,7 @@ function Login() {
           noValidate
           sx={{ mt: 1 }}
         >
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" color='black'>
             Login
           </Typography>
           <Input
@@ -62,6 +62,7 @@ function Login() {
             name="email"
             autoComplete="email"
             autoFocus
+            sx={{color: 'black'}}
           />
           <Input
             required
@@ -71,6 +72,7 @@ function Login() {
             type="password"
             id="password"
             autoComplete="current-password"
+            sx={{color: 'black'}}
           />
           <Button
             fullWidth
@@ -84,6 +86,7 @@ function Login() {
             onClick={signInWithGoogle}
             fullWidth
             variant="outlined"
+            color='secondary'
             sx={{ mt: 3, mb: 2 }}
           >
             Sign-In With Google
@@ -91,8 +94,8 @@ function Login() {
           <Typography>
             Don't have an account? <Link to="/register">Register here</Link>
           </Typography>
-          <Typography variant="body2">
-            Forgot password? <Link to="/reset">Reset here</Link>
+          <Typography variant="body2" color='darkblue'>
+            Forgot password? <Link to="/reset" style={{color: 'darkblue'}}>Reset here</Link>
           </Typography>
         </Stack>
       </Paper>

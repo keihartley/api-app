@@ -8,12 +8,16 @@ export default function GetReview(id) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(doc(db, "reviews", id), (res) => {
-      setReviews(Object.entries(res.data()));
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
+    if (id) {
+      const unsubscribe = onSnapshot(doc(db, "reviews", id), (res) => {
+        setReviews(res.data())
+        setLoading(false)
+      })
+      return () => unsubscribe();
+    } else {
+      setLoading(true);
+      setLoading(null);
+    }
   }, [id]);
 
   return { reviews, loading };

@@ -7,6 +7,7 @@ import {
   LinearProgress,
   TextField,
   Typography,
+  useTheme,
 } from "@mui/material";
 import {
   doc,
@@ -23,6 +24,11 @@ export default function CustomReview({ id }) {
   const [message, setMessage] = useState("");
   const [title, setTitle] = useState("");
   const { reviews, loading } = useGetReview(id);
+  const theme = useTheme();
+
+  if (!reviews && !loading) {
+    return <div>No Reviews</div>;
+  }
 
   async function handleReviewing(res) {
     let user = await auth.currentUser;
@@ -51,6 +57,10 @@ export default function CustomReview({ id }) {
     }
   }
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Grid container direction="column" sx={{ padding: "1em" }}>
       <FormControl
@@ -58,7 +68,7 @@ export default function CustomReview({ id }) {
         variant="filled"
         sx={{ marginBottom: "1em" }}
       >
-        <FormLabel sx={{ marginBottom: "1em" }}>Submit a review</FormLabel>
+        <FormLabel sx={{ marginBottom: "1em", color: theme.palette.text.surface }}>Submit a review</FormLabel>
         <Divider />
         <TextField
           margin="normal"

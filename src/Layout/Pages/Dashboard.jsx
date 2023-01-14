@@ -1,47 +1,37 @@
 import { Box } from "@mui/system";
 import React from "react";
-import Bar from "../../Components/Nav/Bar";
-import {
-  Container,
-  Divider,
-  Grid,
-  LinearProgress,
-  Typography,
-} from "@mui/material";
+import { Grid, LinearProgress } from "@mui/material";
 import CocktailListItem from "../../Components/CocktailList/CocktailListItem";
 import useFetchCocktail from "../../Tools/Hooks/useFetchCocktail";
+import { useTheme } from "@emotion/react";
 
-function Dashboard() {
+function Dashboard({ barRef }) {
   const url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?f=a";
+  const theme = useTheme();
   const { loading, data } = useFetchCocktail(url);
 
   return (
-    <Box sx={{ height: "100%" }}>
-      <Bar />
+    <Box
+      sx={{ background: theme.palette.background.default, padding: "3em" }}
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      maxWidth="100vw"
+      overflow="auto"
+      minHeight={`calc(100vh - ${
+        barRef.current ? barRef.current.offsetHeight : 0
+      }px)`}
+    >
       {loading ? (
         <LinearProgress />
       ) : (
-        <Container>
-          <Typography
-            align="center"
-            gutterBottom={true}
-            variant="h4"
-            sx={{ margin: "2em" }}
-          >
-            Discover Cocktails!
-          </Typography>
-          <Divider sx={{ marginBottom: "3em " }} />
-          <Grid
-            container
-            justifyContent="center"
-            spacing={4}
-            sx={{ padding: "auto" }}
-          >
-            {data.map((item, index) => (
-              <CocktailListItem key={index} cocktail={item} />
-            ))}
-          </Grid>
-        </Container>
+        <Grid container maxWidth="xl" justify="center" spacing={4}>
+          {data.map((item, index) => (
+            <Grid item xs={12} sm={6} md={5} lg={4} xl={3} key={index}>
+              <CocktailListItem cocktail={item} />
+            </Grid>
+          ))}
+        </Grid>
       )}
     </Box>
   );

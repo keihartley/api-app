@@ -1,6 +1,6 @@
 import {
-  Button,
-  Divider,
+  // Button,
+  // Divider,
   FormControl,
   FormControlLabel,
   Grid,
@@ -8,41 +8,42 @@ import {
   Radio,
   RadioGroup,
   Stack,
-  TextField,
+  // TextField,
   Typography,
+  useTheme,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import Bar from "../../Components/Nav/Bar";
 import Setting from "../../Components/Setting/Setting";
 
 export default function Settings({ setTheme, theme }) {
-  console.log(theme)
+  const rootTheme = useTheme();
   const handleThemeChange = (event) => {
     setTheme(event.target.value);
+    localStorage.setItem("theme", event.target.value);
   };
 
-  const profSetting = (
-    <Stack direction="row" spacing={3}>
-      <Button>Change Photo</Button>
-    </Stack>
-  );
+  // const profSetting = (
+  //   <Stack direction="row" spacing={3}>
+  //     <Button color='primary'>Change Photo</Button>
+  //   </Stack>
+  // );
 
-  const displaySetting = (
-    <Stack direction="column" spacing={3}>
-      <Box>
-        <TextField value="Username" />
-      </Box>
-      <Box>
-        <TextField value="Password" />
-      </Box>
-    </Stack>
-  );
+  // const displaySetting = (
+  //   <Stack direction="column" spacing={3}>
+  //     <Box>
+  //       <TextField value="Username" color="primary" />
+  //     </Box>
+  //     <Box>
+  //       <TextField value="Password" />
+  //     </Box>
+  //   </Stack>
+  // );
 
-  const delSetting = (
-    <div>
-      <Button color='primary'>Click to delete your account</Button>
-    </div>
-  );
+  // const delSetting = (
+  //   <div>
+  //     <Button color='primary'>Click to delete your account</Button>
+  //   </div>
+  // );
 
   const themeSetting = (
     <Stack direction="row" spacing={3}>
@@ -61,21 +62,20 @@ export default function Settings({ setTheme, theme }) {
   );
 
   return (
-    <Box sx={{ height: "100%", backgroundColor: 'background.default',}}>
-      <Bar />
+    <Box sx={{ height: "100%", backgroundColor: 'background.default', minHeight: '100vh'}}>
       <Grid container justifyContent="center">
         <Paper sx={{ width: 2 / 3, padding: "2em", margin: "3em" }}>
           <Grid container direction="column" justifyContent="center">
-            <Typography align="center" variant="h5">
-              Settings
+            <Typography align="center" variant="h5" color={rootTheme.palette.text.surface}>
+              Settings (Work in progress)
             </Typography>
-            <Setting type="Profile" val={profSetting} />
-            <Divider />
-            <Setting type="Display Name" val={displaySetting} />
-            <Divider />
-            <Setting type="Theme" val={themeSetting} />
-            <Divider />
-            <Setting type="Delete" val={delSetting} />
+            {/* <Setting type="Profile" val={profSetting} theme={rootTheme} />
+            <Divider color={rootTheme.palette.divider.default} />
+            <Setting type="Display Name" val={displaySetting} theme={rootTheme} />
+            <Divider color={rootTheme.palette.divider.default} /> */}
+            <Setting type="Theme" val={themeSetting} theme={rootTheme} />
+            {/* <Divider color={rootTheme.palette.divider.default} />
+            <Setting type="Delete" val={delSetting} theme={rootTheme} /> */}
           </Grid>
         </Paper>
       </Grid>

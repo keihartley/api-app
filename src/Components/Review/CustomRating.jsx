@@ -1,4 +1,4 @@
-import { CircularProgress, Rating } from "@mui/material";
+import { CircularProgress, Rating, useTheme } from "@mui/material";
 import { Stack } from "@mui/system";
 import {
   doc,
@@ -14,6 +14,7 @@ import useGetRating from "../../Tools/Hooks/useGetRating";
 export default function CustomRating({ id, readOnly = false }) {
   const { ave, loading } = useGetRating(id);
   const [val, setVal] = useState(ave);
+  const theme = useTheme();
 
   useEffect(() => {
     if (ave) {
@@ -54,6 +55,20 @@ export default function CustomRating({ id, readOnly = false }) {
             readOnly={readOnly}
             onChange={(e, newVal) => {
               handleRating(newVal);
+            }}
+            sx={{
+              '& .MuiRating-iconFilled': {
+                color: theme.palette.primary.main,
+              },
+              '& .MuiRating-iconFocus': {
+                color: theme.palette.primary.dark,
+              },
+              '& .MuiRating-iconHover': {
+                color: theme.palette.primary.main
+              },
+              '& .MuiRating-iconEmpty': {
+                color: theme.palette.text.surface
+              },
             }}
           />
         </Stack>

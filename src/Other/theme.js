@@ -1,89 +1,37 @@
 import { createTheme } from "@mui/material/styles";
-
-const baseTheme = createTheme({
-  typography: {
-    fontFamily: "'Work Sans', sans-serif",
-    fontSize: 14,
-    fontFamilySecondary: "'Roboto Condensed', sans-serif",
-  }
-});
+import {lightPalette, darkPalette, baseTheme} from './palettes';
 
 export const lightTheme = createTheme({
   ...baseTheme,
-  palette: {
-    type: "light",
-    primary: {
-      main: "#9a4059",
-    },
-    secondary: {
-      main: "#6750a4",
-      light: "#a596cc"
-    },
-    tertiary: {
-      primary: '#006a60'
-    },
-    text: {
-      primary: "#141414",
-      secondary: '#9b9b9b',
-      tertiary: '#141414'
-    },
-    background: {
-      default: "#f8fdff",
-      paper: "#fefefd"
-    },
-  },
+  palette: lightPalette
 });
 
 export const darkTheme = createTheme({
   ...baseTheme,
-  palette: {
-    type: "dark",
-    primary: {
-      main: "#ffb1c1",
-    },
-    secondary: {
-      main: "#5107ff",
-      light: '#190053'
-    },
-    tertiary: {
-      main: "#33ddc9"
-    },
-    text: {
-      primary: '#f9f9fc',
-      secondary: "#f9f9fc",
-      tertiary: "#f9f9fc"
-    },
-    background: {
-      default: "#001f25",
-      paper: "#00161b"
-    },
-    divider: {
-      borderColor: "#E7F6F2"
-    },
-  },
-  components: {
+  palette: darkPalette,
+  overrides: {
     MuiTextField: {
       styleOverrides: {
         root: {
           "& label": {
-            color: "#E7F6F2",
+            color: darkPalette.divider.default,
           },
           "& label.Mui-focused": {
-            color: "#E7F6F2",
+            color: darkPalette.divider.default,
           },
           "& .MuiInput-underline:after": {
-            borderBottomColor: "#E7F6F2",
+            borderBottomColor: darkPalette.divider.default,
           },
           "& .MuiOutlinedInput-root": {
             "& fieldset": {
-              borderColor: "#E7F6F2",
+              borderColor: darkPalette.divider.default,
             },
             "&:hover fieldset": {
-              borderColor: "#E7F6F2",
+              borderColor: darkPalette.divider.default,
               borderWidth: "0.15rem",
             },
             "&.Mui-focused fieldset": {
-              borderColor: "#E7F6F2",
+              borderColor: darkPalette.divider.default,
             },
           },
         },
@@ -95,9 +43,9 @@ export const darkTheme = createTheme({
       },
       styleOverrides: {
         root: {
-          color: "#E7F6F2",
+          color: darkPalette.text.surface,
         },
       },
-    }
+    },
   },
 });

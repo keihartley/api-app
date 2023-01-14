@@ -29,8 +29,8 @@ function Register() {
   return (
     <Box
       sx={{
-        width: "100%",
-        height: "100%",
+        width: "100vw",
+        height: "100vh",
         backgroundImage: `url(${background})`,
       }}
       display="flex"
@@ -48,7 +48,7 @@ function Register() {
           noValidate
           sx={{ mt: 1 }}
         >
-          <Typography variant="h5">Register</Typography>
+          <Typography variant="h5" color='black'>Register</Typography>
           <Input
             required
             fullWidth
@@ -58,6 +58,7 @@ function Register() {
             autoComplete="username"
             type="text"
             autoFocus
+            sx={{color: 'black'}}
           />
           <Input
             required
@@ -68,6 +69,7 @@ function Register() {
             autoComplete="email"
             type="email"
             autoFocus
+            sx={{color: 'black'}}
           />
           <Input
             required
@@ -78,6 +80,7 @@ function Register() {
             autoComplete="password"
             type="password"
             autoFocus
+            sx={{color: 'black'}}
           />
           <Button
             fullWidth
@@ -90,12 +93,13 @@ function Register() {
           <Button
             onClick={signInWithGoogle}
             fullWidth
+            color='secondary'
             variant="outlined"
             sx={{ mt: 3, mb: 2 }}
           >
             Register With Google
           </Button>
-          <Typography>
+          <Typography color='primary'>
             Already have an account? <Link to="/">Login here</Link>
           </Typography>
         </Stack>

@@ -3,7 +3,6 @@ import React from "react";
 import { Grid, LinearProgress } from "@mui/material";
 import { Box } from "@mui/system";
 import CocktailListItem from "../../Components/CocktailList/CocktailListItem";
-import Bar from "../../Components/Nav/Bar";
 import useFetchCocktail from "../../Tools/Hooks/useFetchCocktail";
 
 function Search() {
@@ -13,7 +12,6 @@ function Search() {
 
   return (
     <Box sx={{ height: "100%" }}>
-      <Bar />
       {loading && <LinearProgress />}
       <Grid container spacing={4} sx={{ padding: "2.0em" }}>
         {data ? (
