@@ -15,46 +15,53 @@ import { Box } from "@mui/system";
 import Bar from "../../Components/Nav/Bar";
 import Setting from "../../Components/Setting/Setting";
 
-const prof = (
-  <Stack direction="row" spacing={3}>
-    <Button>Change Photo</Button>
-  </Stack>
-);
+export default function Settings({ setTheme, theme }) {
+  console.log(theme)
+  const handleThemeChange = (event) => {
+    setTheme(event.target.value);
+  };
 
-const display = (
-  <Stack direction="column" spacing={3}>
-    <Box>
-      <TextField value="Username" />
-    </Box>
-    <Box>
-      <TextField value="Password" />
-    </Box>
-  </Stack>
-);
-const del = <Button>Click to delete your account</Button>;
-const theme = (
-  <Stack direction="row" spacing={3}>
+  const profSetting = (
+    <Stack direction="row" spacing={3}>
+      <Button>Change Photo</Button>
+    </Stack>
+  );
+
+  const displaySetting = (
+    <Stack direction="column" spacing={3}>
+      <Box>
+        <TextField value="Username" />
+      </Box>
+      <Box>
+        <TextField value="Password" />
+      </Box>
+    </Stack>
+  );
+
+  const delSetting = (
+    <div>
+      <Button color='primary'>Click to delete your account</Button>
+    </div>
+  );
+
+  const themeSetting = (
+    <Stack direction="row" spacing={3}>
     <FormControl>
       <RadioGroup
         aria-labelledby="demo-radio-buttons-group-label"
-        defaultValue="female"
+        value={theme}
+        onChange={handleThemeChange}
         name="radio-buttons-group"
       >
-        <FormControlLabel value="default" control={<Radio />} label="Default" />
+        <FormControlLabel value="light" control={<Radio  />} label="Light Mode" />
         <FormControlLabel value="dark" control={<Radio />} label="Dark Mode" />
-        <FormControlLabel
-          value="light"
-          control={<Radio />}
-          label="Light Mode"
-        />
       </RadioGroup>
     </FormControl>
   </Stack>
-);
+  );
 
-export default function Settings() {
   return (
-    <Box sx={{ height: "100%" }}>
+    <Box sx={{ height: "100%", backgroundColor: 'background.default',}}>
       <Bar />
       <Grid container justifyContent="center">
         <Paper sx={{ width: 2 / 3, padding: "2em", margin: "3em" }}>
@@ -62,16 +69,13 @@ export default function Settings() {
             <Typography align="center" variant="h5">
               Settings
             </Typography>
-            <Typography align="center" variant="subtitle2">
-              Page In Progress
-            </Typography>
-            <Setting type="Profile" val={prof} />
+            <Setting type="Profile" val={profSetting} />
             <Divider />
-            <Setting type="Display Name" val={display} />
+            <Setting type="Display Name" val={displaySetting} />
             <Divider />
-            <Setting type="Theme" val={theme} />
+            <Setting type="Theme" val={themeSetting} />
             <Divider />
-            <Setting type="Delete" val={del} />
+            <Setting type="Delete" val={delSetting} />
           </Grid>
         </Paper>
       </Grid>

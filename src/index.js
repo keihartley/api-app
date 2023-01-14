@@ -3,15 +3,11 @@ import ReactDOM from "react-dom/client";
 import App from "./Layout/App";
 import reportWebVitals from "./Other/reportWebVitals";
 import "./index.css";
-import { ThemeProvider } from "@emotion/react";
-import { theme } from "./Other/theme";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
       <App />
-    </ThemeProvider>
   </React.StrictMode>
 );
 

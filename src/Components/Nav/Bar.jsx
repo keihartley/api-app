@@ -22,16 +22,17 @@ import {
   Settings,
   LibraryAddOutlined,
 } from "@mui/icons-material";
-import { styled, alpha } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 
 const Search = styled("form")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  backgroundColor: theme.palette.secondary.main,
   "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
+    backgroundColor: theme.palette.secondary.light,
   },
+  color: theme.palette.text.main,
   marginLeft: 0,
   width: "100%",
   [theme.breakpoints.up("sm")]: {
@@ -94,7 +95,7 @@ function Bar() {
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
+        <AppBar position="static" color='secondary'>
           <Toolbar>
             <Typography
               variant="h6"
