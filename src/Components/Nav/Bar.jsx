@@ -28,11 +28,11 @@ import SearchIcon from "@mui/icons-material/Search";
 const Search = styled("form")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: theme.palette.secondary.main,
+  backgroundColor: theme.palette.secondary.light,
   "&:hover": {
     backgroundColor: theme.palette.secondary.light,
   },
-  color: theme.palette.text.main,
+  color: theme.palette.text.secondary,
   marginLeft: 0,
   width: "100%",
   [theme.breakpoints.up("sm")]: {

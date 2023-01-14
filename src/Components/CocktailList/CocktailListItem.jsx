@@ -17,8 +17,8 @@ export default function CocktailListItem({ cocktail }) {
   return (
     <Grid item xs={12} sm={6} md={4} xl={3}>
       <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
+        initial={{ opacity: 0}}
+        whileInView={{ opacity: 1}}
         viewport={{ once: true }}
       >
         <CocktailCard cocktail={cocktail} />

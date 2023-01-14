@@ -7,7 +7,7 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-import { query, getDocs, collection, where, addDoc } from "firebase/firestore";
+import { query, getDocs, collection, where, addDoc, setDoc, doc } from "firebase/firestore";
 import { createSaved } from "./saved";
 const { auth, db } = require("./firebase");
 
@@ -47,9 +47,17 @@ export const registerWithEmailAndPassword = async (
   password
 ) => {
   await createUserWithEmailAndPassword(auth, email, password)
-    .then((credential) => {
+    .then(async (credential) => {
       const user = credential.user;
-      updateProfile(user, { displayName: username });
+      await updateProfile(user, { displayName: username });
+      const userRef = doc(db, "users", user.uid)
+      await setDoc(userRef, {
+        settings: {
+          displayName: username,
+          theme: 'light'
+          // add any other settings you want to set here
+        },
+      })
       createSaved(user);
     })
     .catch((err) => {
